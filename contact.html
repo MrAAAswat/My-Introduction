@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact | Abdulahad</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg:      #1a1c2c;
+  --bg2:     #252840;
+  --panel:   #2d3a4a;
+  --border:  #4a6fa5;
+  --text:    #c8e0f0;
+  --text2:   #8bbcd6;
+  --text3:   #4a6fa5;
+  --accent:  #8bac0f;
+  --accent2: #6a4c93;
+  --dark:    #0f1020;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Mono', monospace;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+body::before {
+  content: "";
+  position: fixed; inset: 0;
+  background-image:
+    linear-gradient(rgba(74,111,165,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(74,111,165,0.06) 1px, transparent 1px);
+  background-size: 32px 32px;
+  pointer-events: none; z-index: 0;
+}
+
+.wrap {
+  position: relative; z-index: 1;
+  width: 100%; max-width: 480px;
+  animation: fadeup 0.45s ease both;
+}
+@keyframes fadeup { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:none} }
+
+/* Top label */
+.top-label {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 8px; color: var(--text3);
+  margin-bottom: 12px;
+  display: flex; align-items: center; gap: 10px;
+}
+.top-label::before {
+  content: "";
+  flex: 1; height: 2px;
+  background: repeating-linear-gradient(90deg, var(--border) 0,var(--border) 6px,transparent 6px,transparent 12px);
+}
+.top-label::after {
+  content: "";
+  flex: 1; height: 2px;
+  background: repeating-linear-gradient(90deg, var(--border) 0,var(--border) 6px,transparent 6px,transparent 12px);
+}
+
+/* Main card */
+.card {
+  background: var(--panel);
+  border: 3px solid var(--border);
+  box-shadow: 5px 5px 0 var(--dark);
+  overflow: hidden;
+}
+
+/* Card header bar */
+.card-header {
+  background: var(--bg2);
+  border-bottom: 3px solid var(--border);
+  padding: 18px 24px;
+  display: flex; align-items: center; gap: 12px;
+}
+.header-dots { display: flex; gap: 6px; }
+.dot { width: 10px; height: 10px; border-radius: 50%; border: 2px solid var(--dark); }
+.dot-r { background: #c44040; }
+.dot-y { background: #c49040; }
+.dot-g { background: #40a040; }
+.header-title {
+  font-family: 'Press Start 2P', monospace; font-size: 8px;
+  color: var(--text3); margin-left: auto;
+}
+
+/* Card body */
+.card-body { padding: 32px 28px 36px; }
+
+.pixel-label {
+  font-family: 'Press Start 2P', monospace; font-size: 8px;
+  color: var(--accent); margin-bottom: 16px;
+  display: flex; align-items: center; gap: 8px;
+}
+.pixel-label::before {
+  content: "";
+  width: 8px; height: 8px; background: var(--accent);
+  display: inline-block;
+  animation: blink 1.4s step-start infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+.card-body h1 {
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(1rem, 4vw, 1.4rem);
+  color: var(--text);
+  text-shadow: 3px 3px 0 var(--dark);
+  line-height: 1.6;
+  margin-bottom: 8px;
+}
+
+.card-body .sub {
+  font-size: 12px; color: var(--text2);
+  line-height: 1.8; margin-bottom: 32px;
+}
+
+/* Divider */
+.divider {
+  height: 2px; margin: 24px 0;
+  background: repeating-linear-gradient(90deg, var(--border) 0, var(--border) 6px, transparent 6px, transparent 12px);
+}
+
+/* Contact links */
+.contact-links { display: flex; flex-direction: column; gap: 12px; }
+
+.contact-btn {
+  font-family: 'Press Start 2P', monospace; font-size: 8px;
+  display: flex; align-items: center; gap: 14px;
+  padding: 14px 18px;
+  text-decoration: none;
+  border: 2px solid var(--border);
+  color: var(--text2);
+  background: var(--bg2);
+  box-shadow: 3px 3px 0 var(--dark);
+  transition: all 0.1s;
+  position: relative; top: 0;
+}
+.contact-btn:hover {
+  color: var(--bg);
+  border-color: var(--accent);
+  background: var(--accent);
+  box-shadow: none;
+  top: 2px;
+  transform: translateX(2px);
+}
+.contact-btn:active { top: 3px; transform: translateX(3px); box-shadow: none; }
+
+.contact-btn .btn-icon {
+  font-size: 16px; width: 20px; text-align: center; flex-shrink: 0;
+}
+.contact-btn .btn-arrow {
+  margin-left: auto; font-size: 10px;
+  opacity: 0; transition: opacity 0.1s;
+}
+.contact-btn:hover .btn-arrow { opacity: 1; }
+
+/* Email copy row */
+.email-row {
+  font-family: 'Press Start 2P', monospace; font-size: 7px;
+  display: flex; align-items: center; gap: 0;
+  border: 2px solid var(--border);
+  background: var(--bg2);
+  box-shadow: 3px 3px 0 var(--dark);
+  overflow: hidden;
+}
+.email-text {
+  flex: 1; padding: 12px 14px;
+  color: var(--text3); font-size: 7px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.email-copy {
+  font-family: 'Press Start 2P', monospace; font-size: 7px;
+  padding: 12px 14px;
+  border: none; border-left: 2px solid var(--border);
+  background: var(--panel); color: var(--accent);
+  cursor: pointer; transition: all 0.1s;
+  white-space: nowrap;
+}
+.email-copy:hover { background: var(--accent); color: var(--bg); }
+.email-copy.copied { background: var(--accent2); color: #fff; }
+
+/* Status row */
+.status-row {
+  display: flex; align-items: center; gap: 8px;
+  font-family: 'Press Start 2P', monospace; font-size: 7px;
+  color: var(--text3); margin-top: 24px; padding-top: 20px;
+  border-top: 2px dashed var(--border);
+}
+.status-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 6px var(--accent);
+  animation: pulse 2s ease-in-out infinite; flex-shrink: 0;
+}
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+/* Back link */
+.back-link {
+  display: inline-flex; align-items: center; gap: 8px;
+  margin-top: 20px;
+  font-family: 'Press Start 2P', monospace; font-size: 7px;
+  color: var(--text3); text-decoration: none;
+  transition: color 0.1s, gap 0.1s;
+}
+.back-link:hover { color: var(--accent); gap: 12px; }
+.back-link::before { content: "←"; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="top-label">CONTACT.EXE</div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="header-dots">
+        <div class="dot dot-r"></div>
+        <div class="dot dot-y"></div>
+        <div class="dot dot-g"></div>
+      </div>
+      <span class="header-title">abdulahad@portfolio ~ contact</span>
+    </div>
+
+    <div class="card-body">
+      <p class="pixel-label">SEND MESSAGE</p>
+      <h1>CONTACT ME</h1>
+      <p class="sub">Let's build something together. Reach out via any of the channels below.</p>
+
+      <div class="contact-links">
+
+        <a href="https://github.com/MrAAAswat" target="_blank" class="contact-btn">
+          <span class="btn-icon"><i class="fab fa-github"></i></span>
+          GITHUB
+          <span class="btn-arrow">→</span>
+        </a>
+
+        <a href="https://www.linkedin.com/in/abdulahad-aswat-505b44192/" target="_blank" class="contact-btn">
+          <span class="btn-icon"><i class="fab fa-linkedin"></i></span>
+          LINKEDIN
+          <span class="btn-arrow">→</span>
+        </a>
+
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="email-row">
+        <span class="email-text" id="emailText">abdulahad@example.com</span>
+        <button class="email-copy" id="copyBtn" onclick="copyEmail()">COPY</button>
+      </div>
+
+      <div class="status-row">
+        <div class="status-dot"></div>
+        AVAILABLE FOR OPPORTUNITIES
+      </div>
+    </div>
+  </div>
+
+  <a href="index.html" class="back-link"> BACK TO PORTFOLIO</a>
+
+</div>
+
+<script>
+function copyEmail() {
+  const email = document.getElementById('emailText').textContent;
+  navigator.clipboard.writeText(email).then(() => {
+    const btn = document.getElementById('copyBtn');
+    btn.textContent = 'COPIED!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+</script>
+</body>
+</html>
