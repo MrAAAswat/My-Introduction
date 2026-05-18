@@ -33,6 +33,7 @@ body {
   overflow-x: hidden;
 }
 
+/* INTERACTIVE DYNAMIC BACKGROUND GRID */
 body::before {
   content: "";
   position: fixed; inset: 0;
@@ -41,6 +42,11 @@ body::before {
     linear-gradient(90deg, rgba(74,111,165,0.06) 1px, transparent 1px);
   background-size: 32px 32px;
   pointer-events: none; z-index: 0;
+  animation: backgroundScroll 12s linear infinite;
+}
+@keyframes backgroundScroll {
+  from { background-position: 0 0; }
+  to { background-position: 32px 32px; }
 }
 
 .container {
@@ -142,6 +148,7 @@ body::before {
   align-items: center; justify-content: center;
   position: relative; overflow: hidden;
   font-family: 'Press Start 2P', monospace;
+  transition: background 0.1s ease;
 }
 
 .gb-screen::before {
@@ -186,13 +193,17 @@ body::before {
 }
 .gb-dpad div { background: #2a2a2a; border: 1px solid #1a1a1a; }
 .gb-dpad .blank { background: transparent; border-color: transparent; }
+.gb-dpad .dpad-btn { cursor: pointer; }
+.gb-dpad .dpad-btn:active { background: #1a1a1a; }
 
 .gb-ab { display: flex; gap: 10px; align-items: flex-end; }
 .gb-btn {
   width: 22px; height: 22px; border-radius: 50%;
   border: 2px solid #111;
   box-shadow: 0 2px 0 #111;
+  cursor: pointer;
 }
+.gb-btn:active { transform: translateY(2px); box-shadow: none; }
 .gb-btn-a { background: #c44040; }
 .gb-btn-b { background: #5a3d80; }
 .gb-btn-lbl {
@@ -230,6 +241,7 @@ body::before {
   overflow: hidden; cursor: pointer;
   transition: transform .1s, box-shadow .1s;
   display: flex; flex-direction: column;
+  position: relative;
 }
 .fc:hover  { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--dark); }
 .fc:active { transform: translate(1px,1px);   box-shadow: 2px 2px 0 var(--dark); }
@@ -257,11 +269,13 @@ body::before {
 }
 .fc:hover .fc-img::after { opacity: .5; }
 
+/* RECONFIGURED TO A LINK MASK */
 .fc-ov {
   position: absolute; inset: 0;
   background: rgba(26,28,44,.78);
   display: flex; align-items: center; justify-content: center;
   opacity: 0; transition: opacity .25s; z-index: 2;
+  text-decoration: none;
 }
 .fc:hover .fc-ov { opacity: 1; }
 .fc-ov-label {
@@ -316,6 +330,7 @@ body::before {
   overflow: hidden; cursor: pointer;
   transition: transform .1s, box-shadow .1s;
   display: flex; flex-direction: column;
+  position: relative;
 }
 .card:hover  { transform: translate(-2px,-2px); box-shadow: 5px 5px 0 var(--dark); }
 .card:active { transform: translate(1px,1px);   box-shadow: 1px 1px 0 var(--dark); }
@@ -338,11 +353,13 @@ body::before {
 }
 .card:hover .card-preview::after { opacity: .4; }
 
+/* RECONFIGURED TO A LINK MASK */
 .card-ov {
   position: absolute; inset: 0;
   background: rgba(26,28,44,.72);
   display: flex; align-items: center; justify-content: center;
   opacity: 0; transition: opacity .25s; z-index: 2;
+  text-decoration: none;
 }
 .card:hover .card-ov { opacity: 1; }
 .card-ov span {
@@ -412,27 +429,28 @@ footer {
       </div>
     </div>
 
+    <!-- GAME BOY MODULE -->
     <div class="hero-right">
       <div class="gb-screen-wrap">
         <div class="gb-screen">
           <div class="gb-power"></div>
           <div class="gb-sprite">🕹️</div>
-          <div class="gb-screen-text">ABDULAHAD.EXE<br>LOADING...<br>▓▓▓▓▓▓░░░░</div>
+          <div class="gb-screen-text">ABDULAHAD.EXE<br>READY...<br>▓▓▓▓▓▓░░░░</div>
         </div>
       </div>
       <div class="gb-controls">
         <div class="gb-dpad">
-          <div class="blank"></div><div></div><div class="blank"></div>
-          <div></div><div></div><div></div>
-          <div class="blank"></div><div></div><div class="blank"></div>
+          <div class="blank"></div><div class="dpad-btn" data-dir="UP"></div><div class="blank"></div>
+          <div class="dpad-btn" data-dir="LEFT"></div><div class="dpad-btn" data-dir="CENTER"></div><div class="dpad-btn" data-dir="RIGHT"></div>
+          <div class="blank"></div><div class="dpad-btn" data-dir="DOWN"></div><div class="blank"></div>
         </div>
         <div class="gb-ab">
           <div>
-            <div class="gb-btn gb-btn-b"></div>
+            <div class="gb-btn gb-btn-b" id="gb-b"></div>
             <div class="gb-btn-lbl">B</div>
           </div>
           <div>
-            <div class="gb-btn gb-btn-a"></div>
+            <div class="gb-btn gb-btn-a" id="gb-a"></div>
             <div class="gb-btn-lbl">A</div>
           </div>
         </div>
@@ -451,7 +469,7 @@ footer {
     <div class="fc large">
       <div class="fc-img">
         <img src="https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=800&q=80" alt="Sentiment Analysis">
-        <div class="fc-ov"><span class="fc-ov-label">VIEW PROJECT</span></div>
+        <a href="https://github.com/MrAAAswat/Sentiment-analysis" target="_blank" class="fc-ov"><span class="fc-ov-label">VIEW PROJECT</span></a>
       </div>
       <div class="fc-body">
         <div class="fc-tag">PYTHON • NLP</div>
@@ -464,7 +482,7 @@ footer {
     <div class="fc">
       <div class="fc-img">
         <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&q=80" alt="Pipelined CPU">
-        <div class="fc-ov"><span class="fc-ov-label">VIEW PROJECT</span></div>
+        <a href="https://github.com/MrAAAswat/SimpleCPU-with-VHDL-" target="_blank" class="fc-ov"><span class="fc-ov-label">VIEW PROJECT</span></a>
       </div>
       <div class="fc-body">
         <div class="fc-tag">VHDL</div>
@@ -477,7 +495,7 @@ footer {
     <div class="fc">
       <div class="fc-img">
         <img src="https://images.unsplash.com/photo-1655720828018-edd2daec9349?w=600&q=80" alt="EchoBot AI">
-        <div class="fc-ov"><span class="fc-ov-label">VIEW PROJECT</span></div>
+        <a href="https://github.com/MrAAAswat/EchoBot" target="_blank" class="fc-ov"><span class="fc-ov-label">VIEW PROJECT</span></a>
       </div>
       <div class="fc-body">
         <div class="fc-tag">PYTHON • GPT-2</div>
@@ -506,7 +524,7 @@ footer {
     <div class="card" data-cat="ai">
       <div class="card-preview">
         <img src="https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=500&q=70" alt="Sentiment Analysis" loading="lazy">
-        <div class="card-ov"><span>VIEW →</span></div>
+        <a href="https://github.com/MrAAAswat/Sentiment-analysis" target="_blank" class="card-ov"><span>VIEW →</span></a>
       </div>
       <div class="card-body">
         <div class="card-tag">PYTHON • NLP</div>
@@ -519,7 +537,7 @@ footer {
     <div class="card" data-cat="ai">
       <div class="card-preview">
         <img src="https://images.unsplash.com/photo-1655720828018-edd2daec9349?w=500&q=70" alt="EchoBot" loading="lazy">
-        <div class="card-ov"><span>VIEW →</span></div>
+        <a href="https://github.com/MrAAAswat/EchoBot" target="_blank" class="card-ov"><span>VIEW →</span></a>
       </div>
       <div class="card-body">
         <div class="card-tag">PYTHON • GPT-2</div>
@@ -532,7 +550,7 @@ footer {
     <div class="card" data-cat="web">
       <div class="card-preview">
         <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=500&q=70" alt="Enterprise Ecommerce" loading="lazy">
-        <div class="card-ov"><span>VIEW →</span></div>
+        <a href="https://github.com/fiersungod/databaseProject" target="_blank" class="card-link"><span>VIEW →</span></a>
       </div>
       <div class="card-body">
         <div class="card-tag">ASP.NET • NODE</div>
@@ -545,7 +563,7 @@ footer {
     <div class="card" data-cat="web">
       <div class="card-preview">
         <img src="https://images.unsplash.com/photo-1627398242454-45a1465c2479?w=500&q=70" alt="Lightweight Platform" loading="lazy">
-        <div class="card-ov"><span>VIEW →</span></div>
+        <a href="https://github.com/psyPan/e-commerce-platform" target="_blank" class="card-link"><span>VIEW →</span></a>
       </div>
       <div class="card-body">
         <div class="card-tag">FLASK • POSTGRESQL</div>
@@ -558,7 +576,7 @@ footer {
     <div class="card" data-cat="hardware">
       <div class="card-preview">
         <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=500&q=70" alt="Pipelined CPU" loading="lazy">
-        <div class="card-ov"><span>VIEW →</span></div>
+        <a href="https://github.com/MrAAAswat/SimpleCPU-with-VHDL-" target="_blank" class="card-link"><span>VIEW →</span></a>
       </div>
       <div class="card-body">
         <div class="card-tag">VHDL</div>
@@ -603,6 +621,46 @@ function filterCards(cat, btn) {
   document.querySelectorAll('.card').forEach(c => {
     c.classList.toggle('hidden', cat !== 'all' && c.dataset.cat !== cat);
   });
+}
+
+// ── VIRTUAL GAME BOY ENGINE ──
+const screenText = document.querySelector('.gb-screen-text');
+const screenSprite = document.querySelector('.gb-sprite');
+const gbScreen = document.querySelector('.gb-screen');
+
+// D-Pad navigation simulation
+document.querySelectorAll('.dpad-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const dir = btn.dataset.dir;
+    if (dir === 'CENTER') return;
+    
+    // Select a fun directional sprite
+    const directionalSprites = { 'UP': '🚀', 'DOWN': '👾', 'LEFT': '🏃', 'RIGHT': '🚶' };
+    screenSprite.textContent = directionalSprites[dir] || '🕹️';
+    screenText.innerHTML = `WALKING ${dir}...<br>EXPLORING WORLD<br>STATUS: SEARCHING`;
+  });
+});
+
+// A Button: Interaction/Boot
+document.getElementById('gb-a').addEventListener('click', () => {
+  flashScreen();
+  screenSprite.textContent = '⚔️';
+  screenText.innerHTML = `BUTTON (A) PRESSED<br>COMPILING CODE...<br>SYSTEM OVERCLOCK!`;
+});
+
+// B Button: Reset / Return Home
+document.getElementById('gb-b').addEventListener('click', () => {
+  flashScreen();
+  screenSprite.textContent = '🕹️';
+  screenText.innerHTML = `ABDULAHAD.EXE<br>READY...<br>▓▓▓▓▓▓░░░░`;
+});
+
+// Retro physical screen flashing feedback
+function flashScreen() {
+  gbScreen.style.background = '#eefbdf';
+  setTimeout(() => {
+    gbScreen.style.background = '#9bbc0f';
+  }, 80);
 }
 </script>
 </body>
