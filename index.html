@@ -33,20 +33,56 @@ body {
   overflow-x: hidden;
 }
 
-/* INTERACTIVE DYNAMIC BACKGROUND GRID */
+/* ── LAYERED BACKGROUND ── */
+
+/* Layer 1: deep radial vignette */
+body::after {
+  content: "";
+  position: fixed; inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 0%,   rgba(106,76,147,0.18) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 100% 100%, rgba(74,111,165,0.14) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 40% at 0% 80%,   rgba(139,172,15,0.08) 0%, transparent 50%);
+  pointer-events: none; z-index: 0;
+}
+
+/* Layer 2: scrolling grid */
 body::before {
   content: "";
   position: fixed; inset: 0;
   background-image:
-    linear-gradient(rgba(74,111,165,0.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(74,111,165,0.06) 1px, transparent 1px);
-  background-size: 32px 32px;
+    linear-gradient(rgba(74,111,165,0.10) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(74,111,165,0.10) 1px, transparent 1px),
+    linear-gradient(rgba(74,111,165,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(74,111,165,0.04) 1px, transparent 1px);
+  background-size: 128px 128px, 128px 128px, 32px 32px, 32px 32px;
   pointer-events: none; z-index: 0;
-  animation: backgroundScroll 12s linear infinite;
+  animation: backgroundScroll 16s linear infinite;
 }
 @keyframes backgroundScroll {
-  from { background-position: 0 0; }
-  to { background-position: 32px 32px; }
+  from { background-position: 0 0, 0 0, 0 0, 0 0; }
+  to   { background-position: 128px 128px, 128px 128px, 32px 32px, 32px 32px; }
+}
+
+/* Layer 3: floating pixel particles (CSS only) */
+.particles {
+  position: fixed; inset: 0;
+  pointer-events: none; z-index: 0; overflow: hidden;
+}
+.particle {
+  position: absolute;
+  width: 3px; height: 3px;
+  background: var(--border);
+  opacity: 0;
+  animation: floatUp var(--dur, 12s) var(--delay, 0s) linear infinite;
+}
+.particle:nth-child(odd)  { background: var(--accent2); width: 2px; height: 2px; }
+.particle:nth-child(3n)   { background: var(--accent);  width: 2px; height: 2px; }
+@keyframes floatUp {
+  0%   { opacity: 0;    transform: translateY(100vh) translateX(0px); }
+  10%  { opacity: 0.5; }
+  90%  { opacity: 0.3; }
+  100% { opacity: 0;    transform: translateY(-60px) translateX(var(--drift, 20px)); }
 }
 
 .container {
@@ -63,7 +99,7 @@ body::before {
   gap: 0;
   margin-bottom: 56px;
   border: 3px solid var(--border);
-  box-shadow: 5px 5px 0 var(--dark);
+  box-shadow: 5px 5px 0 var(--dark), 0 0 40px rgba(74,111,165,0.15);
   background: var(--panel);
   overflow: hidden;
   animation: fadeup 0.5s ease both;
@@ -75,48 +111,47 @@ body::before {
   border-right: 3px solid var(--border);
   background: var(--bg2);
   display: flex; flex-direction: column; justify-content: center;
+  position: relative; overflow: hidden;
+}
+
+/* Subtle inner glow top-left on hero */
+.hero-left::before {
+  content: "";
+  position: absolute; top: -40px; left: -40px;
+  width: 200px; height: 200px;
+  background: radial-gradient(circle, rgba(139,172,15,0.12) 0%, transparent 70%);
+  pointer-events: none;
 }
 
 .pixel-label {
   font-family: 'Press Start 2P', monospace;
-  font-size: 8px;
-  color: var(--accent);
-  margin-bottom: 18px;
+  font-size: 8px; color: var(--accent); margin-bottom: 18px;
   display: flex; align-items: center; gap: 8px;
 }
 .pixel-label::before {
-  content: "";
-  width: 8px; height: 8px;
-  background: var(--accent);
-  display: inline-block;
-  animation: blink 1.4s step-start infinite;
+  content: ""; width: 8px; height: 8px; background: var(--accent);
+  display: inline-block; animation: blink 1.4s step-start infinite;
 }
 @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
 
 .hero h1 {
   font-family: 'Press Start 2P', monospace;
   font-size: clamp(1rem, 2.4vw, 1.5rem);
-  line-height: 1.7;
-  color: var(--text);
-  margin-bottom: 14px;
+  line-height: 1.7; color: var(--text); margin-bottom: 14px;
   text-shadow: 3px 3px 0 var(--dark);
 }
-.hero h1 span { color: #8bac0f; }
+.hero h1 span { color: var(--accent); }
 
 .hero-sub { font-size: 12px; color: var(--text2); line-height: 1.8; margin-bottom: 28px; }
 
 .hero-buttons { display: flex; gap: 10px; flex-wrap: wrap; }
 
 .btn {
-  font-family: 'Press Start 2P', monospace;
-  font-size: 8px;
-  padding: 10px 16px;
-  text-decoration: none;
+  font-family: 'Press Start 2P', monospace; font-size: 8px;
+  padding: 10px 16px; text-decoration: none;
   display: inline-flex; align-items: center; gap: 8px;
-  border: 2px solid;
-  transition: all 0.1s;
-  cursor: pointer; background: none;
-  position: relative; top: 0;
+  border: 2px solid; transition: all 0.1s;
+  cursor: pointer; background: none; position: relative; top: 0;
 }
 .btn:active { top: 2px; }
 .btn-primary { border-color: var(--accent); color: var(--accent); box-shadow: 3px 3px 0 var(--dark); }
@@ -126,23 +161,29 @@ body::before {
 
 /* Game Boy panel */
 .hero-right {
-  background: #111320;
+  background: #0e1018;
   display: flex; flex-direction: column;
   align-items: center; justify-content: center;
   padding: 28px 24px; gap: 16px;
+  position: relative;
+}
+/* inner glow on GB side */
+.hero-right::before {
+  content: "";
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 80% 80% at 50% 30%, rgba(106,76,147,0.15) 0%, transparent 70%);
+  pointer-events: none;
 }
 
 .gb-screen-wrap {
-  width: 100%;
-  background: #1c1e30;
+  width: 100%; background: #1c1e30;
   border: 3px solid #333;
-  box-shadow: inset 2px 2px 10px rgba(0,0,0,.6), 0 0 0 2px #222;
-  padding: 10px;
+  box-shadow: inset 2px 2px 10px rgba(0,0,0,.6), 0 0 0 2px #222, 0 0 20px rgba(106,76,147,0.2);
+  padding: 10px; position: relative; z-index: 1;
 }
 
 .gb-screen {
-  width: 100%;
-  aspect-ratio: 1.5;
+  width: 100%; aspect-ratio: 1.5;
   background: #9bbc0f;
   display: flex; flex-direction: column;
   align-items: center; justify-content: center;
@@ -150,12 +191,17 @@ body::before {
   font-family: 'Press Start 2P', monospace;
   transition: background 0.1s ease;
 }
-
 .gb-screen::before {
-  content: "";
-  position: absolute; inset: 0;
+  content: ""; position: absolute; inset: 0;
   background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='2' height='2' fill='rgba(0,0,0,0.1)'/%3E%3Crect width='2' height='2' x='2' y='2' fill='rgba(0,0,0,0.1)'/%3E%3C/svg%3E");
   pointer-events: none;
+}
+/* screen glare */
+.gb-screen::after {
+  content: ""; position: absolute; top: 0; left: 0;
+  width: 60%; height: 40%;
+  background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, transparent 60%);
+  pointer-events: none; z-index: 3;
 }
 
 .gb-power {
@@ -166,30 +212,19 @@ body::before {
 }
 @keyframes powerpulse { 0%,100%{opacity:1} 50%{opacity:.4} }
 
-.gb-sprite {
-  font-size: 32px;
-  animation: bounce 1.6s ease-in-out infinite;
-  line-height: 1;
-}
+.gb-sprite { font-size: 32px; animation: bounce 1.6s ease-in-out infinite; line-height: 1; }
 @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
 
 .gb-screen-text {
-  font-size: 7px;
-  color: #1a3a0a;
-  text-align: center;
-  line-height: 2.2;
-  margin-top: 6px;
+  font-size: 7px; color: #1a3a0a;
+  text-align: center; line-height: 2.2; margin-top: 6px;
 }
 
-.gb-controls {
-  display: flex; gap: 24px; align-items: center;
-}
+.gb-controls { display: flex; gap: 24px; align-items: center; position: relative; z-index: 1; }
 
 .gb-dpad {
-  display: grid;
-  grid-template-columns: repeat(3, 18px);
-  grid-template-rows: repeat(3, 18px);
-  gap: 2px;
+  display: grid; grid-template-columns: repeat(3, 18px);
+  grid-template-rows: repeat(3, 18px); gap: 2px;
 }
 .gb-dpad div { background: #2a2a2a; border: 1px solid #1a1a1a; }
 .gb-dpad .blank { background: transparent; border-color: transparent; }
@@ -199,28 +234,16 @@ body::before {
 .gb-ab { display: flex; gap: 10px; align-items: flex-end; }
 .gb-btn {
   width: 22px; height: 22px; border-radius: 50%;
-  border: 2px solid #111;
-  box-shadow: 0 2px 0 #111;
-  cursor: pointer;
+  border: 2px solid #111; box-shadow: 0 2px 0 #111; cursor: pointer;
 }
 .gb-btn:active { transform: translateY(2px); box-shadow: none; }
 .gb-btn-a { background: #c44040; }
 .gb-btn-b { background: #5a3d80; }
-.gb-btn-lbl {
-  font-family: 'Press Start 2P', monospace;
-  font-size: 5px; color: #444;
-  text-align: center; margin-top: 2px;
-}
+.gb-btn-lbl { font-family: 'Press Start 2P', monospace; font-size: 5px; color: #444; text-align: center; margin-top: 2px; }
 
 /* ── SECTION HEADER ── */
-.section-header {
-  display: flex; align-items: center; gap: 12px;
-  margin: 52px 0 24px;
-}
-.section-title {
-  font-family: 'Press Start 2P', monospace;
-  font-size: 10px; color: var(--text); white-space: nowrap;
-}
+.section-header { display: flex; align-items: center; gap: 12px; margin: 52px 0 24px; }
+.section-title { font-family: 'Press Start 2P', monospace; font-size: 10px; color: var(--text); white-space: nowrap; }
 .section-line {
   flex: 1; height: 3px;
   background: repeating-linear-gradient(90deg, var(--border) 0,var(--border) 6px, transparent 6px, transparent 12px);
@@ -235,24 +258,19 @@ body::before {
 .featured { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
 
 .fc {
-  background: var(--panel);
-  border: 3px solid var(--border);
+  background: var(--panel); border: 3px solid var(--border);
   box-shadow: 4px 4px 0 var(--dark);
   overflow: hidden; cursor: pointer;
-  transition: transform .1s, box-shadow .1s;
-  display: flex; flex-direction: column;
-  position: relative;
+  transition: transform .1s, box-shadow .1s, border-color .2s;
+  display: flex; flex-direction: column; position: relative;
 }
-.fc:hover  { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--dark); }
+.fc:hover  { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--dark), 0 0 20px rgba(74,111,165,0.2); border-color: var(--text2); }
 .fc:active { transform: translate(1px,1px);   box-shadow: 2px 2px 0 var(--dark); }
 .fc.large  { grid-column: span 2; flex-direction: row; }
 
-.fc-img {
-  position: relative; overflow: hidden;
-  background: var(--dark); flex-shrink: 0;
-}
+.fc-img { position: relative; overflow: hidden; background: var(--dark); flex-shrink: 0; }
 .fc:not(.large) .fc-img { height: 160px; }
-.fc.large      .fc-img  { width: 46%; height: 220px; }
+.fc.large .fc-img { width: 46%; height: 220px; }
 
 .fc-img img {
   width: 100%; height: 100%; object-fit: cover;
@@ -262,20 +280,17 @@ body::before {
 .fc:hover .fc-img img { filter: saturate(0.8) contrast(1.05); transform: scale(1.04); }
 
 .fc-img::after {
-  content: "";
-  position: absolute; inset: 0;
+  content: ""; position: absolute; inset: 0;
   background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='2' height='2' fill='rgba(26,28,44,0.3)'/%3E%3Crect width='2' height='2' x='2' y='2' fill='rgba(26,28,44,0.3)'/%3E%3C/svg%3E");
   pointer-events: none; transition: opacity .3s;
 }
 .fc:hover .fc-img::after { opacity: .5; }
 
-/* RECONFIGURED TO A LINK MASK */
 .fc-ov {
   position: absolute; inset: 0;
   background: rgba(26,28,44,.78);
   display: flex; align-items: center; justify-content: center;
-  opacity: 0; transition: opacity .25s; z-index: 2;
-  text-decoration: none;
+  opacity: 0; transition: opacity .25s; z-index: 2; text-decoration: none;
 }
 .fc:hover .fc-ov { opacity: 1; }
 .fc-ov-label {
@@ -299,12 +314,10 @@ body::before {
 .fc.large .fc-title { font-size: clamp(9px,1.4vw,13px); }
 .fc-desc { font-size: 12px; color: var(--text2); line-height: 1.7; flex: 1; }
 .fc-link {
-  display: inline-flex; align-items: center; gap: 6px;
-  margin-top: 14px;
+  display: inline-flex; align-items: center; gap: 6px; margin-top: 14px;
   font-family: 'Press Start 2P', monospace; font-size: 7px;
   color: var(--accent); text-decoration: none;
-  border-top: 2px dashed var(--border); padding-top: 12px;
-  transition: gap .15s;
+  border-top: 2px dashed var(--border); padding-top: 12px; transition: gap .15s;
 }
 .fc-link:hover { gap: 12px; }
 .fc-link::after { content: "→"; }
@@ -315,8 +328,7 @@ body::before {
 .filter button {
   font-family: 'Press Start 2P', monospace; font-size: 7px;
   background: none; border: 2px solid var(--border); color: var(--text2);
-  padding: 7px 14px; cursor: pointer;
-  transition: all .1s; box-shadow: 2px 2px 0 var(--dark);
+  padding: 7px 14px; cursor: pointer; transition: all .1s; box-shadow: 2px 2px 0 var(--dark);
 }
 .filter button:hover { transform: translate(-1px,-1px); box-shadow: 3px 3px 0 var(--dark); }
 .filter button.active { background: var(--accent); border-color: var(--accent); color: var(--bg); box-shadow: none; transform: translate(1px,1px); }
@@ -328,11 +340,10 @@ body::before {
   background: var(--panel); border: 3px solid var(--border);
   box-shadow: 3px 3px 0 var(--dark);
   overflow: hidden; cursor: pointer;
-  transition: transform .1s, box-shadow .1s;
-  display: flex; flex-direction: column;
-  position: relative;
+  transition: transform .1s, box-shadow .1s, border-color .2s;
+  display: flex; flex-direction: column; position: relative;
 }
-.card:hover  { transform: translate(-2px,-2px); box-shadow: 5px 5px 0 var(--dark); }
+.card:hover  { transform: translate(-2px,-2px); box-shadow: 5px 5px 0 var(--dark), 0 0 16px rgba(74,111,165,0.18); border-color: var(--text2); }
 .card:active { transform: translate(1px,1px);   box-shadow: 1px 1px 0 var(--dark); }
 
 .card-preview {
@@ -341,25 +352,22 @@ body::before {
 }
 .card-preview img {
   width: 100%; height: 100%; object-fit: cover;
-  filter: saturate(0.4) contrast(1.1);
-  transition: filter .3s, transform .3s;
+  filter: saturate(0.4) contrast(1.1); transition: filter .3s, transform .3s;
 }
 .card:hover .card-preview img { filter: saturate(0.75); transform: scale(1.05); }
 .card-preview::after {
-  content: "";
-  position: absolute; inset: 0;
+  content: ""; position: absolute; inset: 0;
   background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='2' height='2' fill='rgba(26,28,44,0.35)'/%3E%3Crect width='2' height='2' x='2' y='2' fill='rgba(26,28,44,0.35)'/%3E%3C/svg%3E");
   pointer-events: none; transition: opacity .3s;
 }
 .card:hover .card-preview::after { opacity: .4; }
 
-/* RECONFIGURED TO A LINK MASK */
+/* ── FIX: all card overlays are now .card-ov ── */
 .card-ov {
   position: absolute; inset: 0;
   background: rgba(26,28,44,.72);
   display: flex; align-items: center; justify-content: center;
-  opacity: 0; transition: opacity .25s; z-index: 2;
-  text-decoration: none;
+  opacity: 0; transition: opacity .25s; z-index: 2; text-decoration: none;
 }
 .card:hover .card-ov { opacity: 1; }
 .card-ov span {
@@ -372,11 +380,10 @@ body::before {
 .card h3 { font-family: 'Press Start 2P', monospace; font-size: clamp(7px,1vw,9px); color: var(--text); margin-bottom: 10px; line-height: 1.9; }
 .card p { font-size: 11px; color: var(--text2); line-height: 1.7; flex: 1; }
 .card-link {
-  display: inline-flex; align-items: center; gap: 6px;
-  margin-top: 14px; font-family: 'Press Start 2P', monospace; font-size: 6px;
+  display: inline-flex; align-items: center; gap: 6px; margin-top: 14px;
+  font-family: 'Press Start 2P', monospace; font-size: 6px;
   color: var(--text3); text-decoration: none;
-  border-top: 2px dashed var(--border); padding-top: 12px;
-  transition: color .15s, gap .15s;
+  border-top: 2px dashed var(--border); padding-top: 12px; transition: color .15s, gap .15s;
 }
 .card-link:hover { color: var(--accent); gap: 10px; }
 .card-link::after { content: "→"; }
@@ -413,6 +420,10 @@ footer {
 </style>
 </head>
 <body>
+
+<!-- Floating pixel particles -->
+<div class="particles" id="particles"></div>
+
 <div class="container">
 
   <!-- HERO -->
@@ -429,7 +440,6 @@ footer {
       </div>
     </div>
 
-    <!-- GAME BOY MODULE -->
     <div class="hero-right">
       <div class="gb-screen-wrap">
         <div class="gb-screen">
@@ -521,6 +531,7 @@ footer {
   </div>
 
   <div class="grid">
+
     <div class="card" data-cat="ai">
       <div class="card-preview">
         <img src="https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=500&q=70" alt="Sentiment Analysis" loading="lazy">
@@ -550,7 +561,8 @@ footer {
     <div class="card" data-cat="web">
       <div class="card-preview">
         <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=500&q=70" alt="Enterprise Ecommerce" loading="lazy">
-        <a href="https://github.com/fiersungod/databaseProject" target="_blank" class="card-link"><span>VIEW →</span></a>
+        <!-- FIXED: was card-link, now card-ov -->
+        <a href="https://github.com/fiersungod/databaseProject" target="_blank" class="card-ov"><span>VIEW →</span></a>
       </div>
       <div class="card-body">
         <div class="card-tag">ASP.NET • NODE</div>
@@ -563,7 +575,8 @@ footer {
     <div class="card" data-cat="web">
       <div class="card-preview">
         <img src="https://images.unsplash.com/photo-1627398242454-45a1465c2479?w=500&q=70" alt="Lightweight Platform" loading="lazy">
-        <a href="https://github.com/psyPan/e-commerce-platform" target="_blank" class="card-link"><span>VIEW →</span></a>
+        <!-- FIXED: was card-link, now card-ov -->
+        <a href="https://github.com/psyPan/e-commerce-platform" target="_blank" class="card-ov"><span>VIEW →</span></a>
       </div>
       <div class="card-body">
         <div class="card-tag">FLASK • POSTGRESQL</div>
@@ -576,7 +589,7 @@ footer {
     <div class="card" data-cat="hardware">
       <div class="card-preview">
         <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=500&q=70" alt="Pipelined CPU" loading="lazy">
-        <a href="https://github.com/MrAAAswat/SimpleCPU-with-VHDL-" target="_blank" class="card-link"><span>VIEW →</span></a>
+        <a href="https://github.com/MrAAAswat/SimpleCPU-with-VHDL-" target="_blank" class="card-ov"><span>VIEW →</span></a>
       </div>
       <div class="card-body">
         <div class="card-tag">VHDL</div>
@@ -585,6 +598,7 @@ footer {
         <a href="https://github.com/MrAAAswat/SimpleCPU-with-VHDL-" target="_blank" class="card-link">GITHUB</a>
       </div>
     </div>
+
   </div>
 
   <!-- SKILLS -->
@@ -615,6 +629,7 @@ footer {
 </div>
 
 <script>
+// ── FILTER ──
 function filterCards(cat, btn) {
   document.querySelectorAll('.filter button').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
@@ -623,44 +638,53 @@ function filterCards(cat, btn) {
   });
 }
 
-// ── VIRTUAL GAME BOY ENGINE ──
-const screenText = document.querySelector('.gb-screen-text');
-const screenSprite = document.querySelector('.gb-sprite');
-const gbScreen = document.querySelector('.gb-screen');
+// ── PARTICLE GENERATOR ──
+(function spawnParticles() {
+  const container = document.getElementById('particles');
+  const count = 28;
+  for (let i = 0; i < count; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.cssText = `
+      left: ${Math.random() * 100}%;
+      --dur: ${10 + Math.random() * 18}s;
+      --delay: ${-Math.random() * 20}s;
+      --drift: ${(Math.random() - 0.5) * 80}px;
+    `;
+    container.appendChild(p);
+  }
+})();
 
-// D-Pad navigation simulation
+// ── GAME BOY ──
+const screenText   = document.querySelector('.gb-screen-text');
+const screenSprite = document.querySelector('.gb-sprite');
+const gbScreen     = document.querySelector('.gb-screen');
+
 document.querySelectorAll('.dpad-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     const dir = btn.dataset.dir;
     if (dir === 'CENTER') return;
-    
-    // Select a fun directional sprite
-    const directionalSprites = { 'UP': '🚀', 'DOWN': '👾', 'LEFT': '🏃', 'RIGHT': '🚶' };
-    screenSprite.textContent = directionalSprites[dir] || '🕹️';
+    const sprites = { UP: 'N', DOWN: 'S', LEFT: 'W', RIGHT: 'E' };
+    screenSprite.textContent = sprites[dir] || '🕹️';
     screenText.innerHTML = `WALKING ${dir}...<br>EXPLORING WORLD<br>STATUS: SEARCHING`;
   });
 });
 
-// A Button: Interaction/Boot
 document.getElementById('gb-a').addEventListener('click', () => {
   flashScreen();
   screenSprite.textContent = '⚔️';
   screenText.innerHTML = `BUTTON (A) PRESSED<br>COMPILING CODE...<br>SYSTEM OVERCLOCK!`;
 });
 
-// B Button: Reset / Return Home
 document.getElementById('gb-b').addEventListener('click', () => {
   flashScreen();
   screenSprite.textContent = '🕹️';
   screenText.innerHTML = `ABDULAHAD.EXE<br>READY...<br>▓▓▓▓▓▓░░░░`;
 });
 
-// Retro physical screen flashing feedback
 function flashScreen() {
   gbScreen.style.background = '#eefbdf';
-  setTimeout(() => {
-    gbScreen.style.background = '#9bbc0f';
-  }, 80);
+  setTimeout(() => { gbScreen.style.background = '#9bbc0f'; }, 80);
 }
 </script>
 </body>
