@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Portfolio | Abdulahad</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%231a1c2c'/%3E%3Crect x='2' y='2' width='12' height='12' fill='%238bac0f'/%3E%3Crect x='5' y='5' width='2' height='2' fill='%231a1c2c'/%3E%3Crect x='9' y='5' width='2' height='2' fill='%231a1c2c'/%3E%3Crect x='5' y='9' width='6' height='2' fill='%231a1c2c'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 
@@ -15,9 +16,10 @@
   --border:  #4a6fa5;
   --text:    #c8e0f0;
   --text2:   #8bbcd6;
-  --text3:   #4a6fa5;
+  --text3:   #7fa0d6;
   --accent:  #8bac0f;
   --accent2: #6a4c93;
+  --accent2-text: #b89fd6;
   --dark:    #0f1020;
   --gb-red:  #c44040;
   --gb-purp: #6a4c93;
@@ -25,12 +27,35 @@
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+::selection { background: var(--accent); color: var(--dark); }
+
+::-webkit-scrollbar { width: 12px; height: 12px; }
+::-webkit-scrollbar-track { background: var(--dark); }
+::-webkit-scrollbar-thumb { background: var(--border); border: 2px solid var(--dark); }
+::-webkit-scrollbar-thumb:hover { background: var(--text2); }
+* { scrollbar-color: var(--border) var(--dark); scrollbar-width: thin; }
+
+:focus-visible {
+  outline: 2px dashed var(--accent);
+  outline-offset: 3px;
+}
+
 body {
   font-family: 'DM Mono', monospace;
   background: var(--bg);
   color: var(--text);
   min-height: 100vh;
   overflow-x: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .particles { display: none; }
 }
 
 /* ── LAYERED BACKGROUND ── */
@@ -122,6 +147,17 @@ body::before {
   background: radial-gradient(circle, rgba(139,172,15,0.12) 0%, transparent 70%);
   pointer-events: none;
 }
+
+.avatar-frame {
+  width: 64px; height: 64px; margin-bottom: 18px;
+  border: 3px solid var(--border);
+  box-shadow: 3px 3px 0 var(--dark);
+  background: var(--dark);
+  image-rendering: pixelated;
+  overflow: hidden;
+  position: relative; z-index: 1;
+}
+.avatar-img { width: 100%; height: 100%; object-fit: cover; filter: saturate(0.6) contrast(1.1); }
 
 .pixel-label {
   font-family: 'Press Start 2P', monospace;
@@ -239,7 +275,7 @@ body::before {
 .gb-btn:active { transform: translateY(2px); box-shadow: none; }
 .gb-btn-a { background: #c44040; }
 .gb-btn-b { background: #5a3d80; }
-.gb-btn-lbl { font-family: 'Press Start 2P', monospace; font-size: 5px; color: #444; text-align: center; margin-top: 2px; }
+.gb-btn-lbl { font-family: 'Press Start 2P', monospace; font-size: 5px; color: var(--text2); text-align: center; margin-top: 2px; }
 
 /* ── SECTION HEADER ── */
 .section-header { display: flex; align-items: center; gap: 12px; margin: 52px 0 24px; }
@@ -302,7 +338,7 @@ body::before {
 .fc-body { padding: 18px 20px 20px; flex: 1; display: flex; flex-direction: column; justify-content: center; }
 .fc-tag {
   font-family: 'Press Start 2P', monospace; font-size: 7px;
-  color: var(--accent2); margin-bottom: 12px;
+  color: var(--accent2-text); margin-bottom: 12px;
   display: flex; align-items: center; gap: 6px;
 }
 .fc-tag::before { content: "★"; }
@@ -376,7 +412,7 @@ body::before {
 }
 
 .card-body { padding: 14px 16px 16px; flex: 1; display: flex; flex-direction: column; }
-.card-tag { font-family: 'Press Start 2P', monospace; font-size: 6px; color: var(--accent2); margin-bottom: 10px; }
+.card-tag { font-family: 'Press Start 2P', monospace; font-size: 6px; color: var(--accent2-text); margin-bottom: 10px; }
 .card h3 { font-family: 'Press Start 2P', monospace; font-size: clamp(7px,1vw,9px); color: var(--text); margin-bottom: 10px; line-height: 1.9; }
 .card p { font-size: 11px; color: var(--text2); line-height: 1.7; flex: 1; }
 .card-link {
@@ -412,10 +448,15 @@ footer {
 
 @media (max-width: 640px) {
   .hero { grid-template-columns: 1fr; }
-  .hero-right { display: none; }
+  .hero-left { border-right: none; border-bottom: 3px solid var(--border); }
+  .hero-right { padding: 24px 20px; }
+  .gb-screen-wrap { max-width: 280px; margin: 0 auto; }
+  .gb-dpad { grid-template-columns: repeat(3, 26px); grid-template-rows: repeat(3, 26px); }
+  .gb-btn { width: 30px; height: 30px; }
   .featured { grid-template-columns: 1fr; }
   .fc.large { flex-direction: column; grid-column: span 1; }
   .fc.large .fc-img { width: 100%; height: 160px; }
+  footer { flex-direction: column; align-items: flex-start; }
 }
 </style>
 </head>
@@ -429,6 +470,10 @@ footer {
   <!-- HERO -->
   <div class="hero">
     <div class="hero-left">
+      <div class="avatar-frame">
+        <img src="assets/profile.jpg" alt="Portrait of Abdulahad" class="avatar-img"
+             onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 40 40%22%3E%3Crect width=%2240%22 height=%2240%22 fill=%22%232d3a4a%22/%3E%3Crect x=%2213%22 y=%228%22 width=%2214%22 height=%2214%22 fill=%22%238bac0f%22/%3E%3Crect x=%228%22 y=%2224%22 width=%2224%22 height=%2210%22 fill=%22%238bac0f%22/%3E%3C/svg%3E'">
+      </div>
       <p class="pixel-label">PLAYER 1 — READY</p>
       <h1>HI, I'M<br><span>ABDULAHAD</span></h1>
       <p class="hero-sub">Programming enthusiast building intelligent systems &amp; full-stack applications</p>
@@ -449,18 +494,18 @@ footer {
         </div>
       </div>
       <div class="gb-controls">
-        <div class="gb-dpad">
-          <div class="blank"></div><div class="dpad-btn" data-dir="UP"></div><div class="blank"></div>
-          <div class="dpad-btn" data-dir="LEFT"></div><div class="dpad-btn" data-dir="CENTER"></div><div class="dpad-btn" data-dir="RIGHT"></div>
-          <div class="blank"></div><div class="dpad-btn" data-dir="DOWN"></div><div class="blank"></div>
+        <div class="gb-dpad" role="group" aria-label="D-pad, walk the sprite">
+          <div class="blank"></div><div class="dpad-btn" data-dir="UP" role="button" tabindex="0" aria-label="Walk up"></div><div class="blank"></div>
+          <div class="dpad-btn" data-dir="LEFT" role="button" tabindex="0" aria-label="Walk left"></div><div class="dpad-btn" data-dir="CENTER"></div><div class="dpad-btn" data-dir="RIGHT" role="button" tabindex="0" aria-label="Walk right"></div>
+          <div class="blank"></div><div class="dpad-btn" data-dir="DOWN" role="button" tabindex="0" aria-label="Walk down"></div><div class="blank"></div>
         </div>
         <div class="gb-ab">
           <div>
-            <div class="gb-btn gb-btn-b" id="gb-b"></div>
+            <div class="gb-btn gb-btn-b" id="gb-b" role="button" tabindex="0" aria-label="B button, reset screen"></div>
             <div class="gb-btn-lbl">B</div>
           </div>
           <div>
-            <div class="gb-btn gb-btn-a" id="gb-a"></div>
+            <div class="gb-btn gb-btn-a" id="gb-a" role="button" tabindex="0" aria-label="A button, compile code"></div>
             <div class="gb-btn-lbl">A</div>
           </div>
         </div>
@@ -478,7 +523,8 @@ footer {
   <div class="featured">
     <div class="fc large">
       <div class="fc-img">
-        <img src="https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=800&q=80" alt="Sentiment Analysis">
+        <img src="assets/projects/sentiment-analysis.jpg" alt="Sentiment Analysis"
+             onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=800&q=80'">
         <a href="https://github.com/MrAAAswat/Sentiment-analysis" target="_blank" class="fc-ov"><span class="fc-ov-label">VIEW PROJECT</span></a>
       </div>
       <div class="fc-body">
@@ -491,7 +537,8 @@ footer {
 
     <div class="fc">
       <div class="fc-img">
-        <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&q=80" alt="Pipelined CPU">
+        <img src="assets/projects/pipelined-cpu.jpg" alt="Pipelined CPU" loading="lazy"
+             onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&q=80'">
         <a href="https://github.com/MrAAAswat/SimpleCPU-with-VHDL-" target="_blank" class="fc-ov"><span class="fc-ov-label">VIEW PROJECT</span></a>
       </div>
       <div class="fc-body">
@@ -504,7 +551,8 @@ footer {
 
     <div class="fc">
       <div class="fc-img">
-        <img src="https://images.unsplash.com/photo-1655720828018-edd2daec9349?w=600&q=80" alt="EchoBot AI">
+        <img src="assets/projects/echobot.jpg" alt="EchoBot AI" loading="lazy"
+             onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1655720828018-edd2daec9349?w=600&q=80'">
         <a href="https://github.com/MrAAAswat/EchoBot" target="_blank" class="fc-ov"><span class="fc-ov-label">VIEW PROJECT</span></a>
       </div>
       <div class="fc-body">
@@ -534,7 +582,8 @@ footer {
 
     <div class="card" data-cat="ai">
       <div class="card-preview">
-        <img src="https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=500&q=70" alt="Sentiment Analysis" loading="lazy">
+        <img src="assets/projects/sentiment-analysis.jpg" alt="Sentiment Analysis" loading="lazy"
+             onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=500&q=70'">
         <a href="https://github.com/MrAAAswat/Sentiment-analysis" target="_blank" class="card-ov"><span>VIEW →</span></a>
       </div>
       <div class="card-body">
@@ -547,7 +596,8 @@ footer {
 
     <div class="card" data-cat="ai">
       <div class="card-preview">
-        <img src="https://images.unsplash.com/photo-1655720828018-edd2daec9349?w=500&q=70" alt="EchoBot" loading="lazy">
+        <img src="assets/projects/echobot.jpg" alt="EchoBot" loading="lazy"
+             onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1655720828018-edd2daec9349?w=500&q=70'">
         <a href="https://github.com/MrAAAswat/EchoBot" target="_blank" class="card-ov"><span>VIEW →</span></a>
       </div>
       <div class="card-body">
@@ -560,8 +610,8 @@ footer {
 
     <div class="card" data-cat="web">
       <div class="card-preview">
-        <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=500&q=70" alt="Enterprise Ecommerce" loading="lazy">
-        <!-- FIXED: was card-link, now card-ov -->
+        <img src="assets/projects/enterprise-ecommerce.jpg" alt="Enterprise Ecommerce" loading="lazy"
+             onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=500&q=70'">
         <a href="https://github.com/fiersungod/databaseProject" target="_blank" class="card-ov"><span>VIEW →</span></a>
       </div>
       <div class="card-body">
@@ -574,8 +624,8 @@ footer {
 
     <div class="card" data-cat="web">
       <div class="card-preview">
-        <img src="https://images.unsplash.com/photo-1627398242454-45a1465c2479?w=500&q=70" alt="Lightweight Platform" loading="lazy">
-        <!-- FIXED: was card-link, now card-ov -->
+        <img src="assets/projects/lightweight-platform.jpg" alt="Lightweight Platform" loading="lazy"
+             onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1627398242454-45a1465c2479?w=500&q=70'">
         <a href="https://github.com/psyPan/e-commerce-platform" target="_blank" class="card-ov"><span>VIEW →</span></a>
       </div>
       <div class="card-body">
@@ -588,7 +638,8 @@ footer {
 
     <div class="card" data-cat="hardware">
       <div class="card-preview">
-        <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=500&q=70" alt="Pipelined CPU" loading="lazy">
+        <img src="assets/projects/pipelined-cpu.jpg" alt="Pipelined CPU" loading="lazy"
+             onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1518770660439-4636190af475?w=500&q=70'">
         <a href="https://github.com/MrAAAswat/SimpleCPU-with-VHDL-" target="_blank" class="card-ov"><span>VIEW →</span></a>
       </div>
       <div class="card-body">
@@ -660,23 +711,30 @@ const screenText   = document.querySelector('.gb-screen-text');
 const screenSprite = document.querySelector('.gb-sprite');
 const gbScreen     = document.querySelector('.gb-screen');
 
+function activatable(el, handler) {
+  el.addEventListener('click', handler);
+  el.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handler(); }
+  });
+}
+
 document.querySelectorAll('.dpad-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const dir = btn.dataset.dir;
-    if (dir === 'CENTER') return;
+  const dir = btn.dataset.dir;
+  if (dir === 'CENTER') return;
+  activatable(btn, () => {
     const sprites = { UP: 'N', DOWN: 'S', LEFT: 'W', RIGHT: 'E' };
     screenSprite.textContent = sprites[dir] || '🕹️';
     screenText.innerHTML = `WALKING ${dir}...<br>EXPLORING WORLD<br>STATUS: SEARCHING`;
   });
 });
 
-document.getElementById('gb-a').addEventListener('click', () => {
+activatable(document.getElementById('gb-a'), () => {
   flashScreen();
   screenSprite.textContent = '⚔️';
   screenText.innerHTML = `BUTTON (A) PRESSED<br>COMPILING CODE...<br>SYSTEM OVERCLOCK!`;
 });
 
-document.getElementById('gb-b').addEventListener('click', () => {
+activatable(document.getElementById('gb-b'), () => {
   flashScreen();
   screenSprite.textContent = '🕹️';
   screenText.innerHTML = `ABDULAHAD.EXE<br>READY...<br>▓▓▓▓▓▓░░░░`;
