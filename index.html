@@ -1,765 +1,846 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Portfolio | Abdulahad</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%231a1c2c'/%3E%3Crect x='2' y='2' width='12' height='12' fill='%238bac0f'/%3E%3Crect x='5' y='5' width='2' height='2' fill='%231a1c2c'/%3E%3Crect x='9' y='5' width='2' height='2' fill='%231a1c2c'/%3E%3Crect x='5' y='9' width='6' height='2' fill='%231a1c2c'/%3E%3C/svg%3E">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio | Abdulahad</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%231a1c2c'/%3E%3Crect x='2' y='2' width='12' height='12' fill='%238bac0f'/%3E%3Crect x='5' y='5' width='2' height='2' fill='%231a1c2c'/%3E%3Crect x='9' y='5' width='2' height='2' fill='%231a1c2c'/%3E%3Crect x='5' y='9' width='6' height='2' fill='%231a1c2c'/%3E%3C/svg%3E">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #1a1c2c;
+            --bg2: #252840;
+            --panel: #2d3a4a;
+            --border: #4a6fa5;
+            --text: #c8e0f0;
+            --text2: #8bbcd6;
+            --text3: #7fa0d6;
+            --accent: #8bac0f;
+            --accent2: #6a4c93;
+            --accent2-text: #b89fd6;
+            --dark: #0f1020;
+            --gb-red: #c44040;
+            --gb-purp: #6a4c93;
+        }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        ::selection { background: var(--accent); color: var(--dark); }
+        ::-webkit-scrollbar { width: 12px; height: 12px; }
+        ::-webkit-scrollbar-track { background: var(--dark); }
+        ::-webkit-scrollbar-thumb { background: var(--border); border: 2px solid var(--dark); }
+        ::-webkit-scrollbar-thumb:hover { background: var(--text2); }
+        * { scrollbar-color: var(--border) var(--dark); scrollbar-width: thin; }
+        :focus-visible { outline: 2px dashed var(--accent); outline-offset: 3px; }
+        body {
+            font-family: 'DM Mono', monospace;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+            .particles { display: none; }
+        }
+        body::after {
+            content: "";
+            position: fixed; inset: 0;
+            background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(106, 76, 147, 0.18) 0%, transparent 60%), radial-gradient(ellipse 60% 50% at 100% 100%, rgba(74, 111, 165, 0.14) 0%, transparent 55%), radial-gradient(ellipse 50% 40% at 0% 80%, rgba(139, 172, 15, 0.08) 0%, transparent 50%);
+            pointer-events: none; z-index: 0;
+        }
+        body::before {
+            content: "";
+            position: fixed; inset: 0;
+            background-image: linear-gradient(rgba(74, 111, 165, 0.10) 1px, transparent 1px), linear-gradient(90deg, rgba(74, 111, 165, 0.10) 1px, transparent 1px), linear-gradient(rgba(74, 111, 165, 0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(74, 111, 165, 0.04) 1px, transparent 1px);
+            background-size: 128px 128px, 128px 128px, 32px 32px, 32px 32px;
+            pointer-events: none; z-index: 0;
+            animation: backgroundScroll 16s linear infinite;
+        }
+        @keyframes backgroundScroll { from { background-position: 0 0, 0 0, 0 0, 0 0; } to { background-position: 128px 128px, 128px 128px, 32px 32px, 32px 32px; } }
+        .particles { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+        .particle { position: absolute; width: 3px; height: 3px; background: var(--border); opacity: 0; animation: floatUp var(--dur, 12s) var(--delay, 0s) linear infinite; }
+        .particle:nth-child(odd) { background: var(--accent2); width: 2px; height: 2px; }
+        .particle:nth-child(3n) { background: var(--accent); width: 2px; height: 2px; }
+        @keyframes floatUp { 0% { opacity: 0; transform: translateY(100vh) translateX(0px); } 10% { opacity: 0.5; } 90% { opacity: 0.3; } 100% { opacity: 0; transform: translateY(-60px) translateX(var(--drift, 20px)); } }
+        .container { max-width: 980px; margin: auto; padding: 40px 24px 80px; position: relative; z-index: 1; }
 
-<style>
-:root {
-  --bg:      #1a1c2c;
-  --bg2:     #252840;
-  --panel:   #2d3a4a;
-  --border:  #4a6fa5;
-  --text:    #c8e0f0;
-  --text2:   #8bbcd6;
-  --text3:   #7fa0d6;
-  --accent:  #8bac0f;
-  --accent2: #6a4c93;
-  --accent2-text: #b89fd6;
-  --dark:    #0f1020;
-  --gb-red:  #c44040;
-  --gb-purp: #6a4c93;
-}
+        /* Hero */
+        .hero {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            margin-bottom: 56px;
+            border: 3px solid var(--border);
+            box-shadow: 5px 5px 0 var(--dark), 0 0 40px rgba(74, 111, 165, 0.15);
+            background: var(--panel);
+            overflow: hidden;
+            animation: fadeup 0.5s ease both;
+        }
+        @keyframes fadeup { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+        .hero-left {
+            padding: 36px 32px;
+            border-right: 3px solid var(--border);
+            background: var(--bg2);
+            display: flex; flex-direction: column; justify-content: center;
+            position: relative; overflow: hidden;
+        }
+        .hero-left::before { content: ""; position: absolute; top: -40px; left: -40px; width: 200px; height: 200px; background: radial-gradient(circle, rgba(139, 172, 15, 0.12) 0%, transparent 70%); pointer-events: none; }
+        .avatar-frame { width: 64px; height: 64px; margin-bottom: 18px; border: 3px solid var(--border); box-shadow: 3px 3px 0 var(--dark); background: var(--dark); image-rendering: pixelated; overflow: hidden; position: relative; z-index: 1; }
+        .avatar-img { width: 100%; height: 100%; object-fit: cover; filter: saturate(0.6) contrast(1.1); }
+        .pixel-label { font-family: 'Press Start 2P', monospace; font-size: 8px; color: var(--accent); margin-bottom: 18px; display: flex; align-items: center; gap: 8px; }
+        .pixel-label::before { content: ""; width: 8px; height: 8px; background: var(--accent); display: inline-block; animation: blink 1.4s step-start infinite; }
+        @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
+        .hero h1 { font-family: 'Press Start 2P', monospace; font-size: clamp(1rem, 2.4vw, 1.5rem); line-height: 1.7; color: var(--text); margin-bottom: 14px; text-shadow: 3px 3px 0 var(--dark); }
+        .hero h1 span { color: var(--accent); }
+        .hero-sub { font-size: 12px; color: var(--text2); line-height: 1.8; margin-bottom: 28px; }
+        .hero-buttons { display: flex; gap: 10px; flex-wrap: wrap; }
+        .btn { font-family: 'Press Start 2P', monospace; font-size: 8px; padding: 10px 16px; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; border: 2px solid; transition: all 0.1s; cursor: pointer; background: none; position: relative; top: 0; }
+        .btn:active { top: 2px; }
+        .btn-primary { border-color: var(--accent); color: var(--accent); box-shadow: 3px 3px 0 var(--dark); }
+        .btn-primary:hover { background: var(--accent); color: var(--bg); box-shadow: none; top: 2px; }
+        .btn-outline { border-color: var(--border); color: var(--text2); box-shadow: 3px 3px 0 var(--dark); }
+        .btn-outline:hover { background: var(--panel); box-shadow: none; top: 2px; }
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        /* Hero right – battle demo embedded */
+        .hero-right {
+            background: #0e1018;
+            padding: 18px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            position: relative;
+        }
+        .hero-right::before { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse 80% 80% at 50% 30%, rgba(106, 76, 147, 0.15) 0%, transparent 70%); pointer-events: none; }
+        .battle-console {
+            width: 100%;
+            max-width: 420px;
+            background: linear-gradient(180deg, #333, #1b1b1b);
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 0 0 2px #000, 0 12px 30px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,255,255,.06);
+            position: relative;
+            z-index: 1;
+        }
+        .battle-screen-bezel {
+            background: #050505;
+            padding: 6px;
+            border-radius: 4px;
+            box-shadow: inset 0 0 10px rgba(0,0,0,.9);
+        }
+        .battle-screen {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 3/2;
+            overflow: hidden;
+            background: #f5f5f2;
+            image-rendering: pixelated;
+            border-radius: 2px;
+        }
+        #battleScene { position: absolute; inset: 0; width: 100%; height: 65%; image-rendering: pixelated; image-rendering: crisp-edges; }
+        .hud { position: absolute; font-size: 7px; line-height: 1.6; background: #f5f5f2; border: 2px solid #0a0a0a; padding: 6px 8px; min-width: 34%; font-family: 'Press Start 2P', monospace; }
+        .hud .name-row { display: flex; justify-content: space-between; margin-bottom: 4px; }
+        .hp-label { font-size: 6px; letter-spacing: 1px; }
+        .hp-track { height: 6px; background: #d4d4d0; border: 1.5px solid #0a0a0a; margin-top: 2px; position: relative; overflow: hidden; }
+        .hp-fill { height: 100%; width: 100%; background: #0a0a0a; transition: width .5s steps(12); }
+        .hp-fill.low { background-image: repeating-linear-gradient(135deg, #0a0a0a 0 3px, #f5f5f2 3px 6px); }
+        .hp-num { font-size: 7px; text-align: right; margin-top: 3px; }
+        .hud-enemy { top: 4%; left: 4%; }
+        .hud-player { top: 42%; right: 4%; }
+        .lower { position: absolute; left: 0; right: 0; bottom: 0; height: 35%; display: flex; background: #f5f5f2; border-top: 3px solid #0a0a0a; }
+        .textbox { flex: 1 1 62%; border-right: 3px solid #0a0a0a; padding: 8px 10px; font-size: 7px; line-height: 1.7; color: #0a0a0a; cursor: pointer; position: relative; display: flex; align-items: flex-start; font-family: 'Press Start 2P', monospace; }
+        .arrow { position: absolute; right: 10px; bottom: 6px; font-size: 9px; animation: bobBattle 0.6s infinite steps(2); display: none; }
+        .arrow.show { display: block; }
+        @keyframes bobBattle { 0% { transform: translateY(0); } 50% { transform: translateY(3px); } 100% { transform: translateY(0); } }
+        .panel { flex: 1 1 38%; display: none; grid-template-columns: 1fr 1fr; gap: 0; }
+        .panel.show { display: grid; }
+        .panel button { font-family: 'Press Start 2P', monospace; font-size: 6px; background: #f5f5f2; border: none; border-left: 2px solid #0a0a0a; border-bottom: 2px solid #0a0a0a; color: #0a0a0a; cursor: pointer; padding: 0 6px; text-align: left; }
+        .panel button:hover, .panel button:focus-visible { background: #0a0a0a; color: #f5f5f2; outline: none; }
+        .endbar { position: absolute; left: 0; right: 0; bottom: 0; display: none; justify-content: center; padding: 8px; background: #f5f5f2; border-top: 3px solid #0a0a0a; }
+        .endbar.show { display: flex; }
+        .endbar button { font-family: 'Press Start 2P', monospace; font-size: 7px; padding: 8px 12px; background: #0a0a0a; color: #f5f5f2; border: none; cursor: pointer; letter-spacing: 1px; }
+        .endbar button:hover { background: #55554f; }
 
-::selection { background: var(--accent); color: var(--dark); }
-
-::-webkit-scrollbar { width: 12px; height: 12px; }
-::-webkit-scrollbar-track { background: var(--dark); }
-::-webkit-scrollbar-thumb { background: var(--border); border: 2px solid var(--dark); }
-::-webkit-scrollbar-thumb:hover { background: var(--text2); }
-* { scrollbar-color: var(--border) var(--dark); scrollbar-width: thin; }
-
-:focus-visible {
-  outline: 2px dashed var(--accent);
-  outline-offset: 3px;
-}
-
-body {
-  font-family: 'DM Mono', monospace;
-  background: var(--bg);
-  color: var(--text);
-  min-height: 100vh;
-  overflow-x: hidden;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-  .particles { display: none; }
-}
-
-/* ── LAYERED BACKGROUND ── */
-
-/* Layer 1: deep radial vignette */
-body::after {
-  content: "";
-  position: fixed; inset: 0;
-  background:
-    radial-gradient(ellipse 80% 60% at 50% 0%,   rgba(106,76,147,0.18) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 50% at 100% 100%, rgba(74,111,165,0.14) 0%, transparent 55%),
-    radial-gradient(ellipse 50% 40% at 0% 80%,   rgba(139,172,15,0.08) 0%, transparent 50%);
-  pointer-events: none; z-index: 0;
-}
-
-/* Layer 2: scrolling grid */
-body::before {
-  content: "";
-  position: fixed; inset: 0;
-  background-image:
-    linear-gradient(rgba(74,111,165,0.10) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(74,111,165,0.10) 1px, transparent 1px),
-    linear-gradient(rgba(74,111,165,0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(74,111,165,0.04) 1px, transparent 1px);
-  background-size: 128px 128px, 128px 128px, 32px 32px, 32px 32px;
-  pointer-events: none; z-index: 0;
-  animation: backgroundScroll 16s linear infinite;
-}
-@keyframes backgroundScroll {
-  from { background-position: 0 0, 0 0, 0 0, 0 0; }
-  to   { background-position: 128px 128px, 128px 128px, 32px 32px, 32px 32px; }
-}
-
-/* Layer 3: floating pixel particles (CSS only) */
-.particles {
-  position: fixed; inset: 0;
-  pointer-events: none; z-index: 0; overflow: hidden;
-}
-.particle {
-  position: absolute;
-  width: 3px; height: 3px;
-  background: var(--border);
-  opacity: 0;
-  animation: floatUp var(--dur, 12s) var(--delay, 0s) linear infinite;
-}
-.particle:nth-child(odd)  { background: var(--accent2); width: 2px; height: 2px; }
-.particle:nth-child(3n)   { background: var(--accent);  width: 2px; height: 2px; }
-@keyframes floatUp {
-  0%   { opacity: 0;    transform: translateY(100vh) translateX(0px); }
-  10%  { opacity: 0.5; }
-  90%  { opacity: 0.3; }
-  100% { opacity: 0;    transform: translateY(-60px) translateX(var(--drift, 20px)); }
-}
-
-.container {
-  max-width: 980px;
-  margin: auto;
-  padding: 40px 24px 80px;
-  position: relative; z-index: 1;
-}
-
-/* ── HERO ── */
-.hero {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0;
-  margin-bottom: 56px;
-  border: 3px solid var(--border);
-  box-shadow: 5px 5px 0 var(--dark), 0 0 40px rgba(74,111,165,0.15);
-  background: var(--panel);
-  overflow: hidden;
-  animation: fadeup 0.5s ease both;
-}
-@keyframes fadeup { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:none} }
-
-.hero-left {
-  padding: 36px 32px;
-  border-right: 3px solid var(--border);
-  background: var(--bg2);
-  display: flex; flex-direction: column; justify-content: center;
-  position: relative; overflow: hidden;
-}
-
-/* Subtle inner glow top-left on hero */
-.hero-left::before {
-  content: "";
-  position: absolute; top: -40px; left: -40px;
-  width: 200px; height: 200px;
-  background: radial-gradient(circle, rgba(139,172,15,0.12) 0%, transparent 70%);
-  pointer-events: none;
-}
-
-.avatar-frame {
-  width: 64px; height: 64px; margin-bottom: 18px;
-  border: 3px solid var(--border);
-  box-shadow: 3px 3px 0 var(--dark);
-  background: var(--dark);
-  image-rendering: pixelated;
-  overflow: hidden;
-  position: relative; z-index: 1;
-}
-.avatar-img { width: 100%; height: 100%; object-fit: cover; filter: saturate(0.6) contrast(1.1); }
-
-.pixel-label {
-  font-family: 'Press Start 2P', monospace;
-  font-size: 8px; color: var(--accent); margin-bottom: 18px;
-  display: flex; align-items: center; gap: 8px;
-}
-.pixel-label::before {
-  content: ""; width: 8px; height: 8px; background: var(--accent);
-  display: inline-block; animation: blink 1.4s step-start infinite;
-}
-@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
-
-.hero h1 {
-  font-family: 'Press Start 2P', monospace;
-  font-size: clamp(1rem, 2.4vw, 1.5rem);
-  line-height: 1.7; color: var(--text); margin-bottom: 14px;
-  text-shadow: 3px 3px 0 var(--dark);
-}
-.hero h1 span { color: var(--accent); }
-
-.hero-sub { font-size: 12px; color: var(--text2); line-height: 1.8; margin-bottom: 28px; }
-
-.hero-buttons { display: flex; gap: 10px; flex-wrap: wrap; }
-
-.btn {
-  font-family: 'Press Start 2P', monospace; font-size: 8px;
-  padding: 10px 16px; text-decoration: none;
-  display: inline-flex; align-items: center; gap: 8px;
-  border: 2px solid; transition: all 0.1s;
-  cursor: pointer; background: none; position: relative; top: 0;
-}
-.btn:active { top: 2px; }
-.btn-primary { border-color: var(--accent); color: var(--accent); box-shadow: 3px 3px 0 var(--dark); }
-.btn-primary:hover { background: var(--accent); color: var(--bg); box-shadow: none; top: 2px; }
-.btn-outline  { border-color: var(--border);  color: var(--text2); box-shadow: 3px 3px 0 var(--dark); }
-.btn-outline:hover  { background: var(--panel); box-shadow: none; top: 2px; }
-
-/* Game Boy panel */
-.hero-right {
-  background: #0e1018;
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  padding: 28px 24px; gap: 16px;
-  position: relative;
-}
-/* inner glow on GB side */
-.hero-right::before {
-  content: "";
-  position: absolute; inset: 0;
-  background: radial-gradient(ellipse 80% 80% at 50% 30%, rgba(106,76,147,0.15) 0%, transparent 70%);
-  pointer-events: none;
-}
-
-.gb-screen-wrap {
-  width: 100%; background: #1c1e30;
-  border: 3px solid #333;
-  box-shadow: inset 2px 2px 10px rgba(0,0,0,.6), 0 0 0 2px #222, 0 0 20px rgba(106,76,147,0.2);
-  padding: 10px; position: relative; z-index: 1;
-}
-
-.gb-screen {
-  width: 100%; aspect-ratio: 1.5;
-  background: #9bbc0f;
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  position: relative; overflow: hidden;
-  font-family: 'Press Start 2P', monospace;
-  transition: background 0.1s ease;
-}
-.gb-screen::before {
-  content: ""; position: absolute; inset: 0;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='2' height='2' fill='rgba(0,0,0,0.1)'/%3E%3Crect width='2' height='2' x='2' y='2' fill='rgba(0,0,0,0.1)'/%3E%3C/svg%3E");
-  pointer-events: none;
-}
-/* screen glare */
-.gb-screen::after {
-  content: ""; position: absolute; top: 0; left: 0;
-  width: 60%; height: 40%;
-  background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, transparent 60%);
-  pointer-events: none; z-index: 3;
-}
-
-.gb-power {
-  position: absolute; top: 8px; right: 8px;
-  width: 7px; height: 7px; border-radius: 50%;
-  background: #e03030; box-shadow: 0 0 5px #ff4444;
-  animation: powerpulse 2s ease-in-out infinite;
-}
-@keyframes powerpulse { 0%,100%{opacity:1} 50%{opacity:.4} }
-
-.gb-sprite { font-size: 32px; animation: bounce 1.6s ease-in-out infinite; line-height: 1; }
-@keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
-
-.gb-screen-text {
-  font-size: 7px; color: #1a3a0a;
-  text-align: center; line-height: 2.2; margin-top: 6px;
-}
-
-.gb-controls { display: flex; gap: 24px; align-items: center; position: relative; z-index: 1; }
-
-.gb-dpad {
-  display: grid; grid-template-columns: repeat(3, 18px);
-  grid-template-rows: repeat(3, 18px); gap: 2px;
-}
-.gb-dpad div { background: #2a2a2a; border: 1px solid #1a1a1a; }
-.gb-dpad .blank { background: transparent; border-color: transparent; }
-.gb-dpad .dpad-btn { cursor: pointer; }
-.gb-dpad .dpad-btn:active { background: #1a1a1a; }
-
-.gb-ab { display: flex; gap: 10px; align-items: flex-end; }
-.gb-btn {
-  width: 22px; height: 22px; border-radius: 50%;
-  border: 2px solid #111; box-shadow: 0 2px 0 #111; cursor: pointer;
-}
-.gb-btn:active { transform: translateY(2px); box-shadow: none; }
-.gb-btn-a { background: #c44040; }
-.gb-btn-b { background: #5a3d80; }
-.gb-btn-lbl { font-family: 'Press Start 2P', monospace; font-size: 5px; color: var(--text2); text-align: center; margin-top: 2px; }
-
-/* ── SECTION HEADER ── */
-.section-header { display: flex; align-items: center; gap: 12px; margin: 52px 0 24px; }
-.section-title { font-family: 'Press Start 2P', monospace; font-size: 10px; color: var(--text); white-space: nowrap; }
-.section-line {
-  flex: 1; height: 3px;
-  background: repeating-linear-gradient(90deg, var(--border) 0,var(--border) 6px, transparent 6px, transparent 12px);
-}
-.section-badge {
-  font-family: 'Press Start 2P', monospace; font-size: 7px;
-  padding: 5px 10px; background: var(--accent2); color: #fff;
-  border: 2px solid var(--dark); box-shadow: 2px 2px 0 var(--dark);
-}
-
-/* ── FEATURED ── */
-.featured { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
-
-.fc {
-  background: var(--panel); border: 3px solid var(--border);
-  box-shadow: 4px 4px 0 var(--dark);
-  overflow: hidden; cursor: pointer;
-  transition: transform .1s, box-shadow .1s, border-color .2s;
-  display: flex; flex-direction: column; position: relative;
-}
-.fc:hover  { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--dark), 0 0 20px rgba(74,111,165,0.2); border-color: var(--text2); }
-.fc:active { transform: translate(1px,1px);   box-shadow: 2px 2px 0 var(--dark); }
-.fc.large  { grid-column: span 2; flex-direction: row; }
-
-.fc-img { position: relative; overflow: hidden; background: var(--dark); flex-shrink: 0; }
-.fc:not(.large) .fc-img { height: 160px; }
-.fc.large .fc-img { width: 46%; height: 220px; }
-
-.fc-img img {
-  width: 100%; height: 100%; object-fit: cover;
-  filter: saturate(0.45) contrast(1.1);
-  transition: filter .3s, transform .3s;
-}
-.fc:hover .fc-img img { filter: saturate(0.8) contrast(1.05); transform: scale(1.04); }
-
-.fc-img::after {
-  content: ""; position: absolute; inset: 0;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='2' height='2' fill='rgba(26,28,44,0.3)'/%3E%3Crect width='2' height='2' x='2' y='2' fill='rgba(26,28,44,0.3)'/%3E%3C/svg%3E");
-  pointer-events: none; transition: opacity .3s;
-}
-.fc:hover .fc-img::after { opacity: .5; }
-
-.fc-ov {
-  position: absolute; inset: 0;
-  background: rgba(26,28,44,.78);
-  display: flex; align-items: center; justify-content: center;
-  opacity: 0; transition: opacity .25s; z-index: 2; text-decoration: none;
-}
-.fc:hover .fc-ov { opacity: 1; }
-.fc-ov-label {
-  font-family: 'Press Start 2P', monospace; font-size: 8px;
-  color: var(--accent); border: 2px solid var(--accent);
-  padding: 8px 14px; box-shadow: 3px 3px 0 var(--dark); background: var(--bg);
-}
-
-.fc-body { padding: 18px 20px 20px; flex: 1; display: flex; flex-direction: column; justify-content: center; }
-.fc-tag {
-  font-family: 'Press Start 2P', monospace; font-size: 7px;
-  color: var(--accent2-text); margin-bottom: 12px;
-  display: flex; align-items: center; gap: 6px;
-}
-.fc-tag::before { content: "★"; }
-.fc-title {
-  font-family: 'Press Start 2P', monospace;
-  font-size: clamp(8px,1.2vw,11px); color: var(--text);
-  margin-bottom: 10px; line-height: 1.8;
-}
-.fc.large .fc-title { font-size: clamp(9px,1.4vw,13px); }
-.fc-desc { font-size: 12px; color: var(--text2); line-height: 1.7; flex: 1; }
-.fc-link {
-  display: inline-flex; align-items: center; gap: 6px; margin-top: 14px;
-  font-family: 'Press Start 2P', monospace; font-size: 7px;
-  color: var(--accent); text-decoration: none;
-  border-top: 2px dashed var(--border); padding-top: 12px; transition: gap .15s;
-}
-.fc-link:hover { gap: 12px; }
-.fc-link::after { content: "→"; }
-
-/* ── FILTER ── */
-.filter { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; align-items: center; }
-.filter-label { font-family: 'Press Start 2P', monospace; font-size: 7px; color: var(--text3); margin-right: 4px; }
-.filter button {
-  font-family: 'Press Start 2P', monospace; font-size: 7px;
-  background: none; border: 2px solid var(--border); color: var(--text2);
-  padding: 7px 14px; cursor: pointer; transition: all .1s; box-shadow: 2px 2px 0 var(--dark);
-}
-.filter button:hover { transform: translate(-1px,-1px); box-shadow: 3px 3px 0 var(--dark); }
-.filter button.active { background: var(--accent); border-color: var(--accent); color: var(--bg); box-shadow: none; transform: translate(1px,1px); }
-
-/* ── GRID ── */
-.grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(260px,1fr)); gap: 16px; }
-
-.card {
-  background: var(--panel); border: 3px solid var(--border);
-  box-shadow: 3px 3px 0 var(--dark);
-  overflow: hidden; cursor: pointer;
-  transition: transform .1s, box-shadow .1s, border-color .2s;
-  display: flex; flex-direction: column; position: relative;
-}
-.card:hover  { transform: translate(-2px,-2px); box-shadow: 5px 5px 0 var(--dark), 0 0 16px rgba(74,111,165,0.18); border-color: var(--text2); }
-.card:active { transform: translate(1px,1px);   box-shadow: 1px 1px 0 var(--dark); }
-
-.card-preview {
-  height: 140px; position: relative; overflow: hidden;
-  background: var(--dark); border-bottom: 3px solid var(--border); flex-shrink: 0;
-}
-.card-preview img {
-  width: 100%; height: 100%; object-fit: cover;
-  filter: saturate(0.4) contrast(1.1); transition: filter .3s, transform .3s;
-}
-.card:hover .card-preview img { filter: saturate(0.75); transform: scale(1.05); }
-.card-preview::after {
-  content: ""; position: absolute; inset: 0;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='2' height='2' fill='rgba(26,28,44,0.35)'/%3E%3Crect width='2' height='2' x='2' y='2' fill='rgba(26,28,44,0.35)'/%3E%3C/svg%3E");
-  pointer-events: none; transition: opacity .3s;
-}
-.card:hover .card-preview::after { opacity: .4; }
-
-/* ── FIX: all card overlays are now .card-ov ── */
-.card-ov {
-  position: absolute; inset: 0;
-  background: rgba(26,28,44,.72);
-  display: flex; align-items: center; justify-content: center;
-  opacity: 0; transition: opacity .25s; z-index: 2; text-decoration: none;
-}
-.card:hover .card-ov { opacity: 1; }
-.card-ov span {
-  font-family: 'Press Start 2P', monospace; font-size: 7px;
-  color: var(--accent); border: 2px solid var(--accent); padding: 6px 12px; background: var(--bg);
-}
-
-.card-body { padding: 14px 16px 16px; flex: 1; display: flex; flex-direction: column; }
-.card-tag { font-family: 'Press Start 2P', monospace; font-size: 6px; color: var(--accent2-text); margin-bottom: 10px; }
-.card h3 { font-family: 'Press Start 2P', monospace; font-size: clamp(7px,1vw,9px); color: var(--text); margin-bottom: 10px; line-height: 1.9; }
-.card p { font-size: 11px; color: var(--text2); line-height: 1.7; flex: 1; }
-.card-link {
-  display: inline-flex; align-items: center; gap: 6px; margin-top: 14px;
-  font-family: 'Press Start 2P', monospace; font-size: 6px;
-  color: var(--text3); text-decoration: none;
-  border-top: 2px dashed var(--border); padding-top: 12px; transition: color .15s, gap .15s;
-}
-.card-link:hover { color: var(--accent); gap: 10px; }
-.card-link::after { content: "→"; }
-
-/* ── SKILLS ── */
-.skills-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(110px,1fr)); gap: 10px; }
-.skill-chip {
-  font-family: 'Press Start 2P', monospace; font-size: 7px;
-  border: 2px solid var(--border); padding: 10px 8px;
-  color: var(--text2); text-align: center;
-  background: var(--panel); box-shadow: 2px 2px 0 var(--dark);
-  transition: all .1s; cursor: default;
-}
-.skill-chip:hover { background: var(--accent); color: var(--bg); border-color: var(--accent); box-shadow: none; transform: translate(1px,1px); }
-
-/* ── FOOTER ── */
-footer {
-  margin-top: 60px; border-top: 3px solid var(--border);
-  padding-top: 20px;
-  display: flex; justify-content: space-between; align-items: center;
-  flex-wrap: wrap; gap: 12px;
-  font-family: 'Press Start 2P', monospace; font-size: 7px; color: var(--text3);
-}
-
-.card.hidden { display: none; }
-
-@media (max-width: 640px) {
-  .hero { grid-template-columns: 1fr; }
-  .hero-left { border-right: none; border-bottom: 3px solid var(--border); }
-  .hero-right { padding: 24px 20px; }
-  .gb-screen-wrap { max-width: 280px; margin: 0 auto; }
-  .gb-dpad { grid-template-columns: repeat(3, 26px); grid-template-rows: repeat(3, 26px); }
-  .gb-btn { width: 30px; height: 30px; }
-  .featured { grid-template-columns: 1fr; }
-  .fc.large { flex-direction: column; grid-column: span 1; }
-  .fc.large .fc-img { width: 100%; height: 160px; }
-  footer { flex-direction: column; align-items: flex-start; }
-}
-</style>
+        /* section header, featured, filter, grid, skills, footer remain unchanged */
+        .section-header { display: flex; align-items: center; gap: 12px; margin: 52px 0 24px; }
+        .section-title { font-family: 'Press Start 2P', monospace; font-size: 10px; color: var(--text); white-space: nowrap; }
+        .section-line { flex: 1; height: 3px; background: repeating-linear-gradient(90deg, var(--border) 0,var(--border) 6px, transparent 6px, transparent 12px); }
+        .section-badge { font-family: 'Press Start 2P', monospace; font-size: 7px; padding: 5px 10px; background: var(--accent2); color: #fff; border: 2px solid var(--dark); box-shadow: 2px 2px 0 var(--dark); }
+        .featured { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+        .fc { background: var(--panel); border: 3px solid var(--border); box-shadow: 4px 4px 0 var(--dark); overflow: hidden; cursor: pointer; transition: transform .1s, box-shadow .1s, border-color .2s; display: flex; flex-direction: column; position: relative; }
+        .fc:hover { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--dark), 0 0 20px rgba(74,111,165,0.2); border-color: var(--text2); }
+        .fc:active { transform: translate(1px,1px); box-shadow: 2px 2px 0 var(--dark); }
+        .fc.large { grid-column: span 2; flex-direction: row; }
+        .fc-img { position: relative; overflow: hidden; background: var(--dark); flex-shrink: 0; }
+        .fc:not(.large) .fc-img { height: 160px; }
+        .fc.large .fc-img { width: 46%; height: 220px; }
+        .fc-img img { width: 100%; height: 100%; object-fit: cover; filter: saturate(0.45) contrast(1.1); transition: filter .3s, transform .3s; }
+        .fc:hover .fc-img img { filter: saturate(0.8) contrast(1.05); transform: scale(1.04); }
+        .fc-img::after { content: ""; position: absolute; inset: 0; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='2' height='2' fill='rgba(26,28,44,0.3)'/%3E%3Crect width='2' height='2' x='2' y='2' fill='rgba(26,28,44,0.3)'/%3E%3C/svg%3E"); pointer-events: none; transition: opacity .3s; }
+        .fc:hover .fc-img::after { opacity: .5; }
+        .fc-ov { position: absolute; inset: 0; background: rgba(26,28,44,.78); display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity .25s; z-index: 2; text-decoration: none; }
+        .fc:hover .fc-ov { opacity: 1; }
+        .fc-ov-label { font-family: 'Press Start 2P', monospace; font-size: 8px; color: var(--accent); border: 2px solid var(--accent); padding: 8px 14px; box-shadow: 3px 3px 0 var(--dark); background: var(--bg); }
+        .fc-body { padding: 18px 20px 20px; flex: 1; display: flex; flex-direction: column; justify-content: center; }
+        .fc-tag { font-family: 'Press Start 2P', monospace; font-size: 7px; color: var(--accent2-text); margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+        .fc-tag::before { content: "★"; }
+        .fc-title { font-family: 'Press Start 2P', monospace; font-size: clamp(8px,1.2vw,11px); color: var(--text); margin-bottom: 10px; line-height: 1.8; }
+        .fc.large .fc-title { font-size: clamp(9px,1.4vw,13px); }
+        .fc-desc { font-size: 12px; color: var(--text2); line-height: 1.7; flex: 1; }
+        .fc-link { display: inline-flex; align-items: center; gap: 6px; margin-top: 14px; font-family: 'Press Start 2P', monospace; font-size: 7px; color: var(--accent); text-decoration: none; border-top: 2px dashed var(--border); padding-top: 12px; transition: gap .15s; }
+        .fc-link:hover { gap: 12px; }
+        .fc-link::after { content: "→"; }
+        .filter { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; align-items: center; }
+        .filter-label { font-family: 'Press Start 2P', monospace; font-size: 7px; color: var(--text3); margin-right: 4px; }
+        .filter button { font-family: 'Press Start 2P', monospace; font-size: 7px; background: none; border: 2px solid var(--border); color: var(--text2); padding: 7px 14px; cursor: pointer; transition: all .1s; box-shadow: 2px 2px 0 var(--dark); }
+        .filter button:hover { transform: translate(-1px,-1px); box-shadow: 3px 3px 0 var(--dark); }
+        .filter button.active { background: var(--accent); border-color: var(--accent); color: var(--bg); box-shadow: none; transform: translate(1px,1px); }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(260px,1fr)); gap: 16px; }
+        .card { background: var(--panel); border: 3px solid var(--border); box-shadow: 3px 3px 0 var(--dark); overflow: hidden; cursor: pointer; transition: transform .1s, box-shadow .1s, border-color .2s; display: flex; flex-direction: column; position: relative; }
+        .card:hover { transform: translate(-2px,-2px); box-shadow: 5px 5px 0 var(--dark), 0 0 16px rgba(74,111,165,0.18); border-color: var(--text2); }
+        .card:active { transform: translate(1px,1px); box-shadow: 1px 1px 0 var(--dark); }
+        .card-preview { height: 140px; position: relative; overflow: hidden; background: var(--dark); border-bottom: 3px solid var(--border); flex-shrink: 0; }
+        .card-preview img { width: 100%; height: 100%; object-fit: cover; filter: saturate(0.4) contrast(1.1); transition: filter .3s, transform .3s; }
+        .card:hover .card-preview img { filter: saturate(0.75); transform: scale(1.05); }
+        .card-preview::after { content: ""; position: absolute; inset: 0; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='2' height='2' fill='rgba(26,28,44,0.35)'/%3E%3Crect width='2' height='2' x='2' y='2' fill='rgba(26,28,44,0.35)'/%3E%3C/svg%3E"); pointer-events: none; transition: opacity .3s; }
+        .card:hover .card-preview::after { opacity: .4; }
+        .card-ov { position: absolute; inset: 0; background: rgba(26,28,44,.72); display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity .25s; z-index: 2; text-decoration: none; }
+        .card:hover .card-ov { opacity: 1; }
+        .card-ov span { font-family: 'Press Start 2P', monospace; font-size: 7px; color: var(--accent); border: 2px solid var(--accent); padding: 6px 12px; background: var(--bg); }
+        .card-body { padding: 14px 16px 16px; flex: 1; display: flex; flex-direction: column; }
+        .card-tag { font-family: 'Press Start 2P', monospace; font-size: 6px; color: var(--accent2-text); margin-bottom: 10px; }
+        .card h3 { font-family: 'Press Start 2P', monospace; font-size: clamp(7px,1vw,9px); color: var(--text); margin-bottom: 10px; line-height: 1.9; }
+        .card p { font-size: 11px; color: var(--text2); line-height: 1.7; flex: 1; }
+        .card-link { display: inline-flex; align-items: center; gap: 6px; margin-top: 14px; font-family: 'Press Start 2P', monospace; font-size: 6px; color: var(--text3); text-decoration: none; border-top: 2px dashed var(--border); padding-top: 12px; transition: color .15s, gap .15s; }
+        .card-link:hover { color: var(--accent); gap: 10px; }
+        .card-link::after { content: "→"; }
+        .skills-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(110px,1fr)); gap: 10px; }
+        .skill-chip { font-family: 'Press Start 2P', monospace; font-size: 7px; border: 2px solid var(--border); padding: 10px 8px; color: var(--text2); text-align: center; background: var(--panel); box-shadow: 2px 2px 0 var(--dark); transition: all .1s; cursor: default; }
+        .skill-chip:hover { background: var(--accent); color: var(--bg); border-color: var(--accent); box-shadow: none; transform: translate(1px,1px); }
+        footer { margin-top: 60px; border-top: 3px solid var(--border); padding-top: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; font-family: 'Press Start 2P', monospace; font-size: 7px; color: var(--text3); }
+        .card.hidden { display: none; }
+        @media (max-width: 640px) {
+            .hero { grid-template-columns: 1fr; }
+            .hero-left { border-right: none; border-bottom: 3px solid var(--border); }
+            .hero-right { padding: 18px 12px; }
+            .featured { grid-template-columns: 1fr; }
+            .fc.large { flex-direction: column; grid-column: span 1; }
+            .fc.large .fc-img { width: 100%; height: 160px; }
+            footer { flex-direction: column; align-items: flex-start; }
+        }
+    </style>
 </head>
 <body>
 
-<!-- Floating pixel particles -->
-<div class="particles" id="particles"></div>
+    <div class="particles" id="particles"></div>
 
-<div class="container">
+    <div class="container">
 
-  <!-- HERO -->
-  <div class="hero">
-    <div class="hero-left">
-      <div class="avatar-frame">
-        <img src="assets/profile.jpg" alt="Portrait of Abdulahad" class="avatar-img"
-             onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 40 40%22%3E%3Crect width=%2240%22 height=%2240%22 fill=%22%232d3a4a%22/%3E%3Crect x=%2213%22 y=%228%22 width=%2214%22 height=%2214%22 fill=%22%238bac0f%22/%3E%3Crect x=%228%22 y=%2224%22 width=%2224%22 height=%2210%22 fill=%22%238bac0f%22/%3E%3C/svg%3E'">
-      </div>
-      <p class="pixel-label">PLAYER 1 — READY</p>
-      <h1>HI, I'M<br><span>ABDULAHAD</span></h1>
-      <p class="hero-sub">Programming enthusiast building intelligent systems &amp; full-stack applications</p>
-      <div class="hero-buttons">
-        <a href="https://github.com/MrAAAswat" class="btn btn-primary" target="_blank">
-          <i class="fab fa-github"></i> GITHUB
-        </a>
-        <a href="contact.html" class="btn btn-outline">CONTACT</a>
-      </div>
-    </div>
-
-    <div class="hero-right">
-      <div class="gb-screen-wrap">
-        <div class="gb-screen">
-          <div class="gb-power"></div>
-          <div class="gb-sprite">🕹️</div>
-          <div class="gb-screen-text">ABDULAHAD.EXE<br>READY...<br>▓▓▓▓▓▓░░░░</div>
+        <!-- HERO with embedded battle demo -->
+        <div class="hero">
+            <div class="hero-left">
+                <div class="avatar-frame">
+                    <img src="assets/profile.jpg" alt="Portrait of Abdulahad" class="avatar-img" onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 40 40%22%3E%3Crect width=%2240%22 height=%2240%22 fill=%22%232d3a4a%22/%3E%3Crect x=%2213%22 y=%228%22 width=%2214%22 height=%2214%22 fill=%22%238bac0f%22/%3E%3Crect x=%228%22 y=%2224%22 width=%2224%22 height=%2210%22 fill=%22%238bac0f%22/%3E%3C/svg%3E'">
+                </div>
+                <p class="pixel-label">PLAYER 1 — READY</p>
+                <h1>HI, I'M<br><span>ABDULAHAD</span></h1>
+                <p class="hero-sub">Programming enthusiast building intelligent systems &amp; full-stack applications</p>
+                <div class="hero-buttons">
+                    <a href="https://github.com/MrAAAswat" class="btn btn-primary" target="_blank"><i class="fab fa-github"></i> GITHUB</a>
+                    <a href="contact.html" class="btn btn-outline">CONTACT</a>
+                </div>
+            </div>
+            <div class="hero-right">
+                <div class="battle-console">
+                    <div class="battle-screen-bezel">
+                        <div class="battle-screen">
+                            <canvas id="battleScene" width="240" height="160"></canvas>
+                            <div class="hud hud-enemy">
+                                <div class="name-row"><span id="enemyName">SPOOKLING</span><span id="enemyLv">Lv12</span></div>
+                                <div class="hp-label">HP</div>
+                                <div class="hp-track"><div class="hp-fill" id="enemyHpFill"></div></div>
+                            </div>
+                            <div class="hud hud-player">
+                                <div class="name-row"><span id="playerName">ROCKPUP</span><span id="playerLv">Lv14</span></div>
+                                <div class="hp-label">HP</div>
+                                <div class="hp-track"><div class="hp-fill" id="playerHpFill"></div></div>
+                                <div class="hp-num" id="playerHpNum">42/42</div>
+                            </div>
+                            <div class="lower">
+                                <div class="textbox" id="textbox">
+                                    <span id="dialogueText"></span>
+                                    <span class="arrow" id="arrow">▼</span>
+                                </div>
+                                <div class="panel" id="mainPanel">
+                                    <button data-value="fight">FIGHT</button>
+                                    <button data-value="item">ITEM</button>
+                                    <button data-value="info">INFO</button>
+                                    <button data-value="run">RUN</button>
+                                </div>
+                                <div class="panel" id="movePanel"></div>
+                            </div>
+                            <div class="endbar" id="endbar">
+                                <button id="restartBtn">PLAY AGAIN</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="gb-controls">
-        <div class="gb-dpad" role="group" aria-label="D-pad, walk the sprite">
-          <div class="blank"></div><div class="dpad-btn" data-dir="UP" role="button" tabindex="0" aria-label="Walk up"></div><div class="blank"></div>
-          <div class="dpad-btn" data-dir="LEFT" role="button" tabindex="0" aria-label="Walk left"></div><div class="dpad-btn" data-dir="CENTER"></div><div class="dpad-btn" data-dir="RIGHT" role="button" tabindex="0" aria-label="Walk right"></div>
-          <div class="blank"></div><div class="dpad-btn" data-dir="DOWN" role="button" tabindex="0" aria-label="Walk down"></div><div class="blank"></div>
+
+        <!-- FEATURED (unchanged) -->
+        <div class="section-header">
+            <span class="section-title">FEATURED</span>
+            <div class="section-line"></div>
+            <span class="section-badge">TOP PICKS</span>
         </div>
-        <div class="gb-ab">
-          <div>
-            <div class="gb-btn gb-btn-b" id="gb-b" role="button" tabindex="0" aria-label="B button, reset screen"></div>
-            <div class="gb-btn-lbl">B</div>
-          </div>
-          <div>
-            <div class="gb-btn gb-btn-a" id="gb-a" role="button" tabindex="0" aria-label="A button, compile code"></div>
-            <div class="gb-btn-lbl">A</div>
-          </div>
+        <div class="featured">
+            <div class="fc large">
+                <div class="fc-img">
+                    <img src="assets/projects/sentiment-analysis.jpg" alt="Sentiment Analysis" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=800&q=80'">
+                    <a href="https://github.com/MrAAAswat/Sentiment-analysis" target="_blank" class="fc-ov"><span class="fc-ov-label">VIEW PROJECT</span></a>
+                </div>
+                <div class="fc-body">
+                    <div class="fc-tag">PYTHON • NLP</div>
+                    <div class="fc-title">SENTIMENT ANALYSIS WITH BERT</div>
+                    <p class="fc-desc">High-accuracy text classification using the BERT transformer architecture. Fine-tuned on multi-class sentiment datasets with 94%+ accuracy.</p>
+                    <a href="https://github.com/MrAAAswat/Sentiment-analysis" target="_blank" class="fc-link">OPEN PROJECT</a>
+                </div>
+            </div>
+            <div class="fc">
+                <div class="fc-img">
+                    <img src="assets/projects/pipelined-cpu.jpg" alt="Pipelined CPU" loading="lazy" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&q=80'">
+                    <a href="https://github.com/MrAAAswat/SimpleCPU-with-VHDL-" target="_blank" class="fc-ov"><span class="fc-ov-label">VIEW PROJECT</span></a>
+                </div>
+                <div class="fc-body">
+                    <div class="fc-tag">VHDL</div>
+                    <div class="fc-title">PIPELINED CPU</div>
+                    <p class="fc-desc">Instruction-pipelined processor architecture with hazard detection and forwarding logic.</p>
+                    <a href="https://github.com/MrAAAswat/SimpleCPU-with-VHDL-" target="_blank" class="fc-link">OPEN PROJECT</a>
+                </div>
+            </div>
+            <div class="fc">
+                <div class="fc-img">
+                    <img src="assets/projects/echobot.jpg" alt="EchoBot AI" loading="lazy" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1655720828018-edd2daec9349?w=600&q=80'">
+                    <a href="https://github.com/MrAAAswat/EchoBot" target="_blank" class="fc-ov"><span class="fc-ov-label">VIEW PROJECT</span></a>
+                </div>
+                <div class="fc-body">
+                    <div class="fc-tag">PYTHON • GPT-2</div>
+                    <div class="fc-title">ECHOBOT AI</div>
+                    <p class="fc-desc">Conversational chatbot simulating natural dialogue with a fine-tuned language model.</p>
+                    <a href="https://github.com/MrAAAswat/EchoBot" target="_blank" class="fc-link">OPEN PROJECT</a>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </div>
 
-  <!-- FEATURED -->
-  <div class="section-header">
-    <span class="section-title">FEATURED</span>
-    <div class="section-line"></div>
-    <span class="section-badge">TOP PICKS</span>
-  </div>
+        <!-- ALL PROJECTS (battle demo card removed) -->
+        <div class="section-header">
+            <span class="section-title">ALL PROJECTS</span>
+            <div class="section-line"></div>
+        </div>
 
-  <div class="featured">
-    <div class="fc large">
-      <div class="fc-img">
-        <img src="assets/projects/sentiment-analysis.jpg" alt="Sentiment Analysis"
-             onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=800&q=80'">
-        <a href="https://github.com/MrAAAswat/Sentiment-analysis" target="_blank" class="fc-ov"><span class="fc-ov-label">VIEW PROJECT</span></a>
-      </div>
-      <div class="fc-body">
-        <div class="fc-tag">PYTHON • NLP</div>
-        <div class="fc-title">SENTIMENT ANALYSIS WITH BERT</div>
-        <p class="fc-desc">High-accuracy text classification using the BERT transformer architecture. Fine-tuned on multi-class sentiment datasets with 94%+ accuracy. Built with PyTorch and Hugging Face Transformers.</p>
-        <a href="https://github.com/MrAAAswat/Sentiment-analysis" target="_blank" class="fc-link">OPEN PROJECT</a>
-      </div>
-    </div>
+        <div class="filter">
+            <span class="filter-label">FILTER:</span>
+            <button class="active" onclick="filterCards('all',this)">ALL</button>
+            <button onclick="filterCards('ai',this)">AI</button>
+            <button onclick="filterCards('web',this)">WEB</button>
+            <button onclick="filterCards('hardware',this)">HARDWARE</button>
+            <button onclick="filterCards('game',this)">GAME</button>
+        </div>
 
-    <div class="fc">
-      <div class="fc-img">
-        <img src="assets/projects/pipelined-cpu.jpg" alt="Pipelined CPU" loading="lazy"
-             onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&q=80'">
-        <a href="https://github.com/MrAAAswat/SimpleCPU-with-VHDL-" target="_blank" class="fc-ov"><span class="fc-ov-label">VIEW PROJECT</span></a>
-      </div>
-      <div class="fc-body">
-        <div class="fc-tag">VHDL</div>
-        <div class="fc-title">PIPELINED CPU</div>
-        <p class="fc-desc">Instruction-pipelined processor architecture with hazard detection and forwarding logic.</p>
-        <a href="https://github.com/MrAAAswat/SimpleCPU-with-VHDL-" target="_blank" class="fc-link">OPEN PROJECT</a>
-      </div>
-    </div>
+        <div class="grid">
+            <div class="card" data-cat="ai">
+                <div class="card-preview">
+                    <img src="assets/projects/sentiment-analysis.jpg" alt="Sentiment Analysis" loading="lazy" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=500&q=70'">
+                    <a href="https://github.com/MrAAAswat/Sentiment-analysis" target="_blank" class="card-ov"><span>VIEW →</span></a>
+                </div>
+                <div class="card-body">
+                    <div class="card-tag">PYTHON • NLP</div>
+                    <h3>SENTIMENT ANALYSIS WITH BERT</h3>
+                    <p>High-accuracy classification using transformer architecture.</p>
+                    <a href="https://github.com/MrAAAswat/Sentiment-analysis" target="_blank" class="card-link">GITHUB</a>
+                </div>
+            </div>
+            <div class="card" data-cat="ai">
+                <div class="card-preview">
+                    <img src="assets/projects/echobot.jpg" alt="EchoBot" loading="lazy" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1655720828018-edd2daec9349?w=500&q=70'">
+                    <a href="https://github.com/MrAAAswat/EchoBot" target="_blank" class="card-ov"><span>VIEW →</span></a>
+                </div>
+                <div class="card-body">
+                    <div class="card-tag">PYTHON • GPT-2</div>
+                    <h3>ECHOBOT AI</h3>
+                    <p>Conversational chatbot simulating natural dialogue.</p>
+                    <a href="https://github.com/MrAAAswat/EchoBot" target="_blank" class="card-link">GITHUB</a>
+                </div>
+            </div>
+            <div class="card" data-cat="web">
+                <div class="card-preview">
+                    <img src="assets/projects/enterprise-ecommerce.jpg" alt="Enterprise Ecommerce" loading="lazy" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=500&q=70'">
+                    <a href="https://github.com/fiersungod/databaseProject" target="_blank" class="card-ov"><span>VIEW →</span></a>
+                </div>
+                <div class="card-body">
+                    <div class="card-tag">ASP.NET • NODE</div>
+                    <h3>ENTERPRISE ECOMMERCE</h3>
+                    <p>Secure database-driven commerce platform.</p>
+                    <a href="https://github.com/fiersungod/databaseProject" target="_blank" class="card-link">GITHUB</a>
+                </div>
+            </div>
+            <div class="card" data-cat="web">
+                <div class="card-preview">
+                    <img src="assets/projects/lightweight-platform.jpg" alt="Lightweight Platform" loading="lazy" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1627398242454-45a1465c2479?w=500&q=70'">
+                    <a href="https://github.com/psyPan/e-commerce-platform" target="_blank" class="card-ov"><span>VIEW →</span></a>
+                </div>
+                <div class="card-body">
+                    <div class="card-tag">FLASK • POSTGRESQL</div>
+                    <h3>LIGHTWEIGHT PLATFORM</h3>
+                    <p>Backend-focused ecommerce solution.</p>
+                    <a href="https://github.com/psyPan/e-commerce-platform" target="_blank" class="card-link">GITHUB</a>
+                </div>
+            </div>
+            <div class="card" data-cat="hardware">
+                <div class="card-preview">
+                    <img src="assets/projects/pipelined-cpu.jpg" alt="Pipelined CPU" loading="lazy" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1518770660439-4636190af475?w=500&q=70'">
+                    <a href="https://github.com/MrAAAswat/SimpleCPU-with-VHDL-" target="_blank" class="card-ov"><span>VIEW →</span></a>
+                </div>
+                <div class="card-body">
+                    <div class="card-tag">VHDL</div>
+                    <h3>PIPELINED CPU</h3>
+                    <p>Instruction-pipelined processor architecture.</p>
+                    <a href="https://github.com/MrAAAswat/SimpleCPU-with-VHDL-" target="_blank" class="card-link">GITHUB</a>
+                </div>
+            </div>
+            <div class="card" data-cat="game">
+                <div class="card-preview">
+                    <img src="assets/projects/pokemon-engine.jpg" alt="Pokémon-Like Engine battle screen" loading="lazy" onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/MrAAAswat/PokemonLikeEngine/main/ScreenShots/BattleSystem.png'">
+                    <a href="https://github.com/MrAAAswat/PokemonLikeEngine" target="_blank" class="card-ov"><span>VIEW →</span></a>
+                </div>
+                <div class="card-body">
+                    <div class="card-tag">C++ • CMAKE</div>
+                    <h3>POKÉMON-LIKE ENGINE</h3>
+                    <p>2D open-world RPG engine with turn-based battles and save/inventory system.</p>
+                    <a href="https://github.com/MrAAAswat/PokemonLikeEngine" target="_blank" class="card-link">GITHUB</a>
+                </div>
+            </div>
+        </div>
 
-    <div class="fc">
-      <div class="fc-img">
-        <img src="assets/projects/echobot.jpg" alt="EchoBot AI" loading="lazy"
-             onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1655720828018-edd2daec9349?w=600&q=80'">
-        <a href="https://github.com/MrAAAswat/EchoBot" target="_blank" class="fc-ov"><span class="fc-ov-label">VIEW PROJECT</span></a>
-      </div>
-      <div class="fc-body">
-        <div class="fc-tag">PYTHON • GPT-2</div>
-        <div class="fc-title">ECHOBOT AI</div>
-        <p class="fc-desc">Conversational chatbot simulating natural dialogue with a fine-tuned language model.</p>
-        <a href="https://github.com/MrAAAswat/EchoBot" target="_blank" class="fc-link">OPEN PROJECT</a>
-      </div>
-    </div>
-  </div>
+        <!-- SKILLS -->
+        <div class="section-header">
+            <span class="section-title">SKILLS</span>
+            <div class="section-line"></div>
+        </div>
+        <div class="skills-grid">
+            <div class="skill-chip">PYTHON</div>
+            <div class="skill-chip">PYTORCH</div>
+            <div class="skill-chip">TRANSFORMERS</div>
+            <div class="skill-chip">ASP.NET</div>
+            <div class="skill-chip">NODE.JS</div>
+            <div class="skill-chip">FLASK</div>
+            <div class="skill-chip">POSTGRESQL</div>
+            <div class="skill-chip">VHDL</div>
+            <div class="skill-chip">C++</div>
+            <div class="skill-chip">JAVASCRIPT</div>
+            <div class="skill-chip">REACT</div>
+            <div class="skill-chip">GIT</div>
+            <div class="skill-chip">DOCKER</div>
+        </div>
 
-  <!-- ALL PROJECTS -->
-  <div class="section-header">
-    <span class="section-title">ALL PROJECTS</span>
-    <div class="section-line"></div>
-  </div>
-
-  <div class="filter">
-    <span class="filter-label">FILTER:</span>
-    <button class="active" onclick="filterCards('all',this)">ALL</button>
-    <button onclick="filterCards('ai',this)">AI</button>
-    <button onclick="filterCards('web',this)">WEB</button>
-    <button onclick="filterCards('hardware',this)">HARDWARE</button>
-    <button onclick="filterCards('game',this)">GAME</button>
-  </div>
-
-  <div class="grid">
-
-    <div class="card" data-cat="ai">
-      <div class="card-preview">
-        <img src="assets/projects/sentiment-analysis.jpg" alt="Sentiment Analysis" loading="lazy"
-             onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=500&q=70'">
-        <a href="https://github.com/MrAAAswat/Sentiment-analysis" target="_blank" class="card-ov"><span>VIEW →</span></a>
-      </div>
-      <div class="card-body">
-        <div class="card-tag">PYTHON • NLP</div>
-        <h3>SENTIMENT ANALYSIS WITH BERT</h3>
-        <p>High-accuracy classification using transformer architecture.</p>
-        <a href="https://github.com/MrAAAswat/Sentiment-analysis" target="_blank" class="card-link">GITHUB</a>
-      </div>
-    </div>
-
-    <div class="card" data-cat="ai">
-      <div class="card-preview">
-        <img src="assets/projects/echobot.jpg" alt="EchoBot" loading="lazy"
-             onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1655720828018-edd2daec9349?w=500&q=70'">
-        <a href="https://github.com/MrAAAswat/EchoBot" target="_blank" class="card-ov"><span>VIEW →</span></a>
-      </div>
-      <div class="card-body">
-        <div class="card-tag">PYTHON • GPT-2</div>
-        <h3>ECHOBOT AI</h3>
-        <p>Conversational chatbot simulating natural dialogue.</p>
-        <a href="https://github.com/MrAAAswat/EchoBot" target="_blank" class="card-link">GITHUB</a>
-      </div>
-    </div>
-
-    <div class="card" data-cat="web">
-      <div class="card-preview">
-        <img src="assets/projects/enterprise-ecommerce.jpg" alt="Enterprise Ecommerce" loading="lazy"
-             onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=500&q=70'">
-        <a href="https://github.com/fiersungod/databaseProject" target="_blank" class="card-ov"><span>VIEW →</span></a>
-      </div>
-      <div class="card-body">
-        <div class="card-tag">ASP.NET • NODE</div>
-        <h3>ENTERPRISE ECOMMERCE</h3>
-        <p>Secure database-driven commerce platform.</p>
-        <a href="https://github.com/fiersungod/databaseProject" target="_blank" class="card-link">GITHUB</a>
-      </div>
-    </div>
-
-    <div class="card" data-cat="web">
-      <div class="card-preview">
-        <img src="assets/projects/lightweight-platform.jpg" alt="Lightweight Platform" loading="lazy"
-             onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1627398242454-45a1465c2479?w=500&q=70'">
-        <a href="https://github.com/psyPan/e-commerce-platform" target="_blank" class="card-ov"><span>VIEW →</span></a>
-      </div>
-      <div class="card-body">
-        <div class="card-tag">FLASK • POSTGRESQL</div>
-        <h3>LIGHTWEIGHT PLATFORM</h3>
-        <p>Backend-focused ecommerce solution.</p>
-        <a href="https://github.com/psyPan/e-commerce-platform" target="_blank" class="card-link">GITHUB</a>
-      </div>
+        <footer>
+            <span>© 2026 ABDULAHAD</span>
+            <span>BUILT WITH CAFFEINE ☕ & CURIOSITY</span>
+        </footer>
     </div>
 
-    <div class="card" data-cat="hardware">
-      <div class="card-preview">
-        <img src="assets/projects/pipelined-cpu.jpg" alt="Pipelined CPU" loading="lazy"
-             onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1518770660439-4636190af475?w=500&q=70'">
-        <a href="https://github.com/MrAAAswat/SimpleCPU-with-VHDL-" target="_blank" class="card-ov"><span>VIEW →</span></a>
-      </div>
-      <div class="card-body">
-        <div class="card-tag">VHDL</div>
-        <h3>PIPELINED CPU</h3>
-        <p>Instruction-pipelined processor architecture.</p>
-        <a href="https://github.com/MrAAAswat/SimpleCPU-with-VHDL-" target="_blank" class="card-link">GITHUB</a>
-      </div>
-    </div>
+    <script>
+        // ── FILTER ──
+        function filterCards(cat, btn) {
+            document.querySelectorAll('.filter button').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            document.querySelectorAll('.card').forEach(c => {
+                c.classList.toggle('hidden', cat !== 'all' && c.dataset.cat !== cat);
+            });
+        }
 
-    <div class="card" data-cat="game">
-      <div class="card-preview">
-        <img src="assets/projects/pokemon-engine.jpg" alt="Pokémon-Like Engine battle screen" loading="lazy"
-             onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/MrAAAswat/PokemonLikeEngine/main/ScreenShots/BattleSystem.png'">
-        <a href="https://github.com/MrAAAswat/PokemonLikeEngine" target="_blank" class="card-ov"><span>VIEW →</span></a>
-      </div>
-      <div class="card-body">
-        <div class="card-tag">C++ • CMAKE</div>
-        <h3>POKÉMON-LIKE ENGINE</h3>
-        <p>2D open-world RPG engine with multi-map exploration, turn-based battles, and a full save/inventory system.</p>
-        <a href="https://github.com/MrAAAswat/PokemonLikeEngine" target="_blank" class="card-link">GITHUB</a>
-      </div>
-    </div>
+        // ── PARTICLE GENERATOR ──
+        (function spawnParticles() {
+            const container = document.getElementById('particles');
+            const count = 28;
+            for (let i = 0; i < count; i++) {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                p.style.cssText = `left: ${Math.random()*100}%; --dur: ${10+Math.random()*18}s; --delay: ${-Math.random()*20}s; --drift: ${(Math.random()-0.5)*80}px;`;
+                container.appendChild(p);
+            }
+        })();
 
-  </div>
+        // ── BATTLE GAME ENGINE (embedded in hero) ──
+        (function initBattle() {
+            const canvas = document.getElementById('battleScene');
+            const ctx = canvas.getContext('2d');
+            ctx.imageSmoothingEnabled = false;
+            const W = canvas.width, H = canvas.height;
 
-  <!-- SKILLS -->
-  <div class="section-header">
-    <span class="section-title">SKILLS</span>
-    <div class="section-line"></div>
-  </div>
-  <div class="skills-grid">
-    <div class="skill-chip">PYTHON</div>
-    <div class="skill-chip">PYTORCH</div>
-    <div class="skill-chip">TRANSFORMERS</div>
-    <div class="skill-chip">ASP.NET</div>
-    <div class="skill-chip">NODE.JS</div>
-    <div class="skill-chip">FLASK</div>
-    <div class="skill-chip">POSTGRESQL</div>
-    <div class="skill-chip">VHDL</div>
-    <div class="skill-chip">C++</div>
-    <div class="skill-chip">JAVASCRIPT</div>
-    <div class="skill-chip">REACT</div>
-    <div class="skill-chip">GIT</div>
-    <div class="skill-chip">DOCKER</div>
-  </div>
+            const INK = '#0a0a0a', PAPER = '#f5f5f2', G1 = '#d4d4d0', G2 = '#9a9a96', G3 = '#55554f';
 
-  <footer>
-    <span>© 2026 ABDULAHAD</span>
-    <span>BUILT WITH CAFFEINE ☕ & CURIOSITY</span>
-  </footer>
+            const player = {
+                name: 'ROCKPUP', maxHp: 42, hp: 42, guarding: false,
+                moves: [
+                    { name: 'TACKLE', power: [7, 13], acc: 0.95 },
+                    { name: 'ROCK THROW', power: [11, 18], acc: 0.8 },
+                    { name: 'BITE', power: [9, 15], acc: 0.9 },
+                    { name: 'GUARD', guard: true, acc: 1 }
+                ]
+            };
+            const enemy = {
+                name: 'SPOOKLING', maxHp: 38, hp: 38,
+                moves: [
+                    { name: 'SCRATCH', power: [6, 12], acc: 0.95 },
+                    { name: 'SHADOW PECK', power: [9, 16], acc: 0.85 },
+                    { name: 'SCREECH', power: [5, 9], acc: 0.95 }
+                ]
+            };
+            let items = 2;
+            const TIPS = [
+                'TIP: GUARD halves the next hit you take.',
+                'TIP: Items are limited — use them wisely.',
+                'TIP: RUN has a 50/50 chance to work.',
+                'TIP: Every move has a chance to miss!'
+            ];
 
-</div>
+            document.getElementById('enemyName').textContent = enemy.name;
+            document.getElementById('playerName').textContent = player.name;
 
-<script>
-// ── FILTER ──
-function filterCards(cat, btn) {
-  document.querySelectorAll('.filter button').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  document.querySelectorAll('.card').forEach(c => {
-    c.classList.toggle('hidden', cat !== 'all' && c.dataset.cat !== cat);
-  });
-}
+            const anim = {
+                enemyShakeUntil: 0, playerShakeUntil: 0,
+                enemyFlashUntil: 0, playerFlashUntil: 0,
+                enemyFaint: false, enemyFaintStart: 0,
+                playerFaint: false, playerFaintStart: 0
+            };
 
-// ── PARTICLE GENERATOR ──
-(function spawnParticles() {
-  const container = document.getElementById('particles');
-  const count = 28;
-  for (let i = 0; i < count; i++) {
-    const p = document.createElement('div');
-    p.className = 'particle';
-    p.style.cssText = `
-      left: ${Math.random() * 100}%;
-      --dur: ${10 + Math.random() * 18}s;
-      --delay: ${-Math.random() * 20}s;
-      --drift: ${(Math.random() - 0.5) * 80}px;
-    `;
-    container.appendChild(p);
-  }
-})();
+            function shakeOffset(until, now) { return now > until ? 0 : Math.sin(now * 0.09) * 3; }
+            function flashOn(until, now) { return now > until ? false : Math.floor(now / 70) % 2 === 0; }
 
-// ── GAME BOY ──
-const screenText   = document.querySelector('.gb-screen-text');
-const screenSprite = document.querySelector('.gb-sprite');
-const gbScreen     = document.querySelector('.gb-screen');
+            const TONE = { WHITE: 1, LIGHT: 2, DARK: 3, INK: 4 };
+            const PALETTE = { 1: '#f5f5f2', 2: '#c9c9c4', 3: '#6b6b66', 4: '#0a0a0a' };
+            const PALETTE_FLASH = { 1: '#0a0a0a', 2: '#6b6b66', 3: '#c9c9c4', 4: '#f5f5f2' };
+            const GRID = 24, UNIT = 2.6;
 
-function activatable(el, handler) {
-  el.addEventListener('click', handler);
-  el.addEventListener('keydown', e => {
-    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handler(); }
-  });
-}
+            function inTri(px, py, ax, ay, bx, by, cx, cy) {
+                const d1 = (px - bx) * (ay - by) - (ax - bx) * (py - by);
+                const d2 = (px - cx) * (by - cy) - (bx - cx) * (py - cy);
+                const d3 = (px - ax) * (cy - ay) - (cx - ax) * (py - ay);
+                const neg = d1 < 0 || d2 < 0 || d3 < 0, pos = d1 > 0 || d2 > 0 || d3 > 0;
+                return !(neg && pos);
+            }
+            const dist = (x1, y1, x2, y2) => Math.hypot(x1 - x2, y1 - y2);
 
-document.querySelectorAll('.dpad-btn').forEach(btn => {
-  const dir = btn.dataset.dir;
-  if (dir === 'CENTER') return;
-  activatable(btn, () => {
-    const sprites = { UP: 'N', DOWN: 'S', LEFT: 'W', RIGHT: 'E' };
-    screenSprite.textContent = sprites[dir] || '🕹️';
-    screenText.innerHTML = `WALKING ${dir}...<br>EXPLORING WORLD<br>STATUS: SEARCHING`;
-  });
-});
+            function testEnemy(x, y) {
+                let t = 0;
+                if (inTri(x, y, 11, 3, 27, -8, 20, 17)) t = TONE.LIGHT;
+                const bodyMain = (x / 14) ** 2 + ((y - 1) / 13) ** 2 <= 1;
+                const bodyHead = (x / 9) ** 2 + ((y + 8) / 8.5) ** 2 <= 1;
+                let inBody = bodyMain || bodyHead;
+                if (inBody && y > 7) { const zig = 8 + (Math.floor(x / 4) % 2 === 0 ? 7 : 2); inBody = y < zig; }
+                if (inBody) t = TONE.DARK;
+                if (inTri(x, y, 4, -8, 9, -8, 7, -23)) t = TONE.INK;
+                if (inTri(x, y, 8, -5, 12, -6, 11, -15)) t = TONE.INK;
+                if (inTri(x, y, 2, 8, 6, 8, 3.5, 14)) t = TONE.INK;
+                if (dist(x, y, 5.5, -1) <= 3.0) t = TONE.WHITE;
+                if (dist(x, y, 6.8, 0) <= 1.1) t = TONE.INK;
+                return t;
+            }
 
-activatable(document.getElementById('gb-a'), () => {
-  flashScreen();
-  screenSprite.textContent = '⚔️';
-  screenText.innerHTML = `BUTTON (A) PRESSED<br>COMPILING CODE...<br>SYSTEM OVERCLOCK!`;
-});
+            function testPlayer(x, y) {
+                let t = 0;
+                const body = (x / 19) ** 2 + ((y - 2) / 15) ** 2 <= 1;
+                if (body) t = TONE.LIGHT;
+                const ear = inTri(x, y, 7, -10, 17, -13, 11, -23);
+                if (ear) t = TONE.LIGHT;
+                const earInner = inTri(x, y, 9, -11, 14, -13, 11, -19);
+                if (earInner) t = TONE.DARK;
+                if (inTri(x, y, 1, -12, 6, -12, 3.5, -19)) t = TONE.INK;
+                if (inTri(x, y, 7, -13, 13, -13, 10, -22)) t = TONE.INK;
+                if (inTri(x, y, 14, -11, 19, -10, 17, -17)) t = TONE.INK;
+                if (dist(x, y, 10, 17) <= 4.2) t = TONE.DARK;
+                if (dist(x, y, 0, 4) <= 3.2) t = TONE.DARK;
+                return t;
+            }
 
-activatable(document.getElementById('gb-b'), () => {
-  flashScreen();
-  screenSprite.textContent = '🕹️';
-  screenText.innerHTML = `ABDULAHAD.EXE<br>READY...<br>▓▓▓▓▓▓░░░░`;
-});
+            function buildGrid(testFn) {
+                const half = GRID / 2;
+                const grid = [];
+                for (let row = 0; row < GRID; row++) {
+                    grid[row] = [];
+                    for (let col = 0; col < GRID; col++) {
+                        const x = (col - half + 0.5) * UNIT;
+                        const y = (row - half + 0.5) * UNIT;
+                        grid[row][col] = testFn(Math.abs(x), y);
+                    }
+                }
+                const out = grid.map(r => r.slice());
+                for (let row = 0; row < GRID; row++) {
+                    for (let col = 0; col < GRID; col++) {
+                        if (grid[row][col] === 0) continue;
+                        const nbrs = [[row-1,col],[row+1,col],[row,col-1],[row,col+1]];
+                        for (const [r,c] of nbrs) {
+                            if (r<0||c<0||r>=GRID||c>=GRID||grid[r][c]===0) { out[row][col] = TONE.INK; break; }
+                        }
+                    }
+                }
+                return out;
+            }
+            const enemyGrid = buildGrid(testEnemy);
+            const playerGrid = buildGrid(testPlayer);
 
-function flashScreen() {
-  gbScreen.style.background = '#eefbdf';
-  setTimeout(() => { gbScreen.style.background = '#9bbc0f'; }, 80);
-}
-</script>
+            function drawPixelSprite(grid, cx, cy, block, flash) {
+                const half = GRID / 2;
+                const colors = flash ? PALETTE_FLASH : PALETTE;
+                ctx.save();
+                for (let row = 0; row < GRID; row++) {
+                    for (let col = 0; col < GRID; col++) {
+                        const t = grid[row][col];
+                        if (t === 0) continue;
+                        ctx.fillStyle = colors[t];
+                        const px = Math.round(cx + (col - half) * block);
+                        const py = Math.round(cy + (row - half) * block);
+                        const sz = Math.ceil(block);
+                        ctx.fillRect(px, py, sz, sz);
+                    }
+                }
+                ctx.restore();
+            }
+
+            function drawScene(now) {
+                ctx.clearRect(0, 0, W, H);
+                const skyGrad = ctx.createLinearGradient(0, 0, 0, 70);
+                skyGrad.addColorStop(0, '#eeeeea');
+                skyGrad.addColorStop(1, PAPER);
+                ctx.fillStyle = skyGrad;
+                ctx.fillRect(0, 0, W, 70);
+                ctx.fillStyle = G1;
+                ctx.fillRect(0, 70, W, H - 70);
+                ctx.strokeStyle = G2;
+                ctx.lineWidth = 1;
+                ctx.beginPath(); ctx.moveTo(0, 70); ctx.lineTo(W, 70); ctx.stroke();
+                ctx.strokeStyle = G2;
+                for (let i = 0; i < W; i += 9) { ctx.beginPath(); ctx.moveTo(i, 74); ctx.lineTo(i - 3, 80); ctx.stroke(); }
+                ctx.fillStyle = G2;
+                ctx.beginPath(); ctx.ellipse(172, 54, 30, 9, 0, 0, Math.PI * 2); ctx.fill();
+                ctx.strokeStyle = G3; ctx.stroke();
+                ctx.fillStyle = G2;
+                ctx.beginPath(); ctx.ellipse(62, 124, 42, 13, 0, 0, Math.PI * 2); ctx.fill();
+                ctx.strokeStyle = G3; ctx.stroke();
+
+                if (!(anim.enemyFaint && (now - anim.enemyFaintStart) > 650)) {
+                    let fy = 0, alpha = 1;
+                    if (anim.enemyFaint) { const t = Math.min(1, (now - anim.enemyFaintStart) / 650); fy = t * 30; alpha = 1 - t; }
+                    ctx.save(); ctx.globalAlpha = alpha;
+                    const sx = shakeOffset(anim.enemyShakeUntil, now);
+                    drawPixelSprite(enemyGrid, 172 + sx, 44 + fy, 1.9, flashOn(anim.enemyFlashUntil, now));
+                    ctx.restore();
+                }
+                if (!(anim.playerFaint && (now - anim.playerFaintStart) > 650)) {
+                    let fy = 0, alpha = 1;
+                    if (anim.playerFaint) { const t = Math.min(1, (now - anim.playerFaintStart) / 650); fy = t * 30; alpha = 1 - t; }
+                    ctx.save(); ctx.globalAlpha = alpha;
+                    const sx = shakeOffset(anim.playerShakeUntil, now);
+                    drawPixelSprite(playerGrid, 58 + sx, 100 + fy, 2.5, flashOn(anim.playerFlashUntil, now));
+                    ctx.restore();
+                }
+            }
+
+            function battleLoop(now) {
+                drawScene(now);
+                requestAnimationFrame(battleLoop);
+            }
+            requestAnimationFrame(battleLoop);
+
+            function updateHUD() {
+                const pf = document.getElementById('playerHpFill');
+                const ef = document.getElementById('enemyHpFill');
+                const pPct = Math.max(0, player.hp / player.maxHp * 100);
+                const ePct = Math.max(0, enemy.hp / enemy.maxHp * 100);
+                pf.style.width = pPct + '%';
+                ef.style.width = ePct + '%';
+                pf.classList.toggle('low', pPct <= 25);
+                ef.classList.toggle('low', ePct <= 25);
+                document.getElementById('playerHpNum').textContent = Math.max(0, player.hp) + '/' + player.maxHp;
+            }
+
+            const dialogueText = document.getElementById('dialogueText');
+            const arrowEl = document.getElementById('arrow');
+            const textbox = document.getElementById('textbox');
+            let typing = false, currentResolve = null, fullText = '', typeTimer = null;
+
+            function typeMessage(text) {
+                fullText = text;
+                dialogueText.textContent = '';
+                typing = true;
+                arrowEl.classList.remove('show');
+                clearInterval(typeTimer);
+                let i = 0;
+                typeTimer = setInterval(() => {
+                    dialogueText.textContent += text[i];
+                    i++;
+                    if (i >= text.length) { clearInterval(typeTimer); typing = false; arrowEl.classList.add('show'); }
+                }, 22);
+            }
+
+            function showMessage(text) {
+                return new Promise(resolve => { currentResolve = resolve; typeMessage(text); });
+            }
+
+            function advance() {
+                if (typing) {
+                    clearInterval(typeTimer);
+                    dialogueText.textContent = fullText;
+                    typing = false;
+                    arrowEl.classList.add('show');
+                } else if (currentResolve) {
+                    const r = currentResolve;
+                    currentResolve = null;
+                    arrowEl.classList.remove('show');
+                    r();
+                }
+            }
+            textbox.addEventListener('click', advance);
+            document.addEventListener('keydown', e => { if (e.key === 'Enter' || e.code === 'Space') advance(); });
+
+            function chooseFrom(buttons) {
+                return new Promise(resolve => {
+                    const ac = new AbortController();
+                    buttons.forEach(btn => {
+                        btn.addEventListener('click', () => { ac.abort(); resolve(btn.dataset.value); }, { signal: ac.signal });
+                    });
+                });
+            }
+
+            const mainPanel = document.getElementById('mainPanel');
+            const movePanel = document.getElementById('movePanel');
+            const mainButtons = Array.from(mainPanel.querySelectorAll('button'));
+
+            function showMain(show) { mainPanel.classList.toggle('show', show); }
+            function buildMovePanel() {
+                movePanel.innerHTML = '';
+                player.moves.forEach((m, idx) => {
+                    const b = document.createElement('button');
+                    b.textContent = m.name;
+                    b.dataset.value = idx;
+                    movePanel.appendChild(b);
+                });
+                if (player.moves.length === 3) {
+                    const back = document.createElement('button');
+                    back.textContent = '← BACK';
+                    back.dataset.value = 'back';
+                    movePanel.appendChild(back);
+                }
+            }
+            function showMoves(show) { movePanel.classList.toggle('show', show); }
+            const rand = (a, b) => Math.floor(Math.random() * (b - a + 1)) + a;
+
+            function beep(freq, dur) {
+                try {
+                    const Ctx = window.AudioContext || window.webkitAudioContext;
+                    const actx = beep._ctx || (beep._ctx = new Ctx());
+                    if (actx.state === 'suspended') actx.resume();
+                    const osc = actx.createOscillator();
+                    const gain = actx.createGain();
+                    osc.type = 'square';
+                    osc.frequency.value = freq;
+                    gain.gain.value = 0.05;
+                    osc.connect(gain); gain.connect(actx.destination);
+                    osc.start();
+                    gain.gain.exponentialRampToValueAtTime(0.0001, actx.currentTime + dur);
+                    osc.stop(actx.currentTime + dur);
+                } catch(e) {}
+            }
+
+            function animateHit(target) {
+                const now = performance.now();
+                if (target === 'enemy') { anim.enemyShakeUntil = now + 280; anim.enemyFlashUntil = now + 280; beep(880, 0.08); }
+                else { anim.playerShakeUntil = now + 280; anim.playerFlashUntil = now + 280; beep(200, 0.09); }
+            }
+            function animateFaint(target) {
+                const now = performance.now();
+                if (target === 'enemy') { anim.enemyFaint = true; anim.enemyFaintStart = now; beep(140, 0.3); }
+                else { anim.playerFaint = true; anim.playerFaintStart = now; beep(100, 0.3); }
+            }
+
+            const endbar = document.getElementById('endbar');
+            function endBattle() { showMain(false); showMoves(false); endbar.classList.add('show'); }
+            document.getElementById('restartBtn').addEventListener('click', () => {
+                endbar.classList.remove('show');
+                resetBattle();
+                runBattle();
+            });
+
+            function resetBattle() {
+                player.hp = player.maxHp; player.guarding = false;
+                enemy.hp = enemy.maxHp;
+                items = 2;
+                anim.enemyFaint = false; anim.playerFaint = false;
+                anim.enemyShakeUntil = anim.playerShakeUntil = 0;
+                anim.enemyFlashUntil = anim.playerFlashUntil = 0;
+                updateHUD();
+            }
+
+            async function runBattle() {
+                updateHUD();
+                await showMessage(`A wild ${enemy.name} appeared!`);
+                await showMessage(`Go! ${player.name}!`);
+                while (true) {
+                    showMain(true);
+                    const action = await chooseFrom(mainButtons);
+                    showMain(false);
+                    let usedTurn = true;
+                    if (action === 'fight') {
+                        buildMovePanel();
+                        showMoves(true);
+                        const moveButtons = Array.from(movePanel.querySelectorAll('button'));
+                        const choice = await chooseFrom(moveButtons);
+                        showMoves(false);
+                        if (choice === 'back') { continue; }
+                        const move = player.moves[Number(choice)];
+                        if (move.guard) { player.guarding = true; await showMessage(`${player.name} braced itself!`); }
+                        else {
+                            const hit = Math.random() < move.acc;
+                            await showMessage(`${player.name} used ${move.name}!`);
+                            if (hit) { const dmg = rand(move.power[0], move.power[1]); enemy.hp = Math.max(0, enemy.hp - dmg); animateHit('enemy'); updateHUD(); }
+                            else { await showMessage(`But it missed!`); }
+                        }
+                    } else if (action === 'item') {
+                        if (items > 0) {
+                            items--;
+                            const heal = rand(14, 24);
+                            player.hp = Math.min(player.maxHp, player.hp + heal);
+                            updateHUD();
+                            await showMessage(`Used a POTION! ${player.name} recovered ${heal} HP! (${items} left)`);
+                        } else { await showMessage(`No items left!`); usedTurn = false; }
+                    } else if (action === 'info') {
+                        await showMessage(TIPS[rand(0, TIPS.length - 1)]);
+                        usedTurn = false;
+                    } else if (action === 'run') {
+                        if (Math.random() < 0.5) { await showMessage(`Got away safely!`); endBattle(); return; }
+                        else { await showMessage(`Can't escape!`); }
+                    }
+                    if (enemy.hp <= 0) { animateFaint('enemy'); await showMessage(`Foe ${enemy.name} fainted!`); await showMessage(`You won the battle!`); endBattle(); return; }
+                    if (!usedTurn) continue;
+                    const eMove = enemy.moves[rand(0, enemy.moves.length - 1)];
+                    const eHit = Math.random() < eMove.acc;
+                    await showMessage(`Foe ${enemy.name} used ${eMove.name}!`);
+                    if (eHit) {
+                        let dmg = rand(eMove.power[0], eMove.power[1]);
+                        if (player.guarding) dmg = Math.floor(dmg / 2);
+                        player.hp = Math.max(0, player.hp - dmg);
+                        animateHit('player');
+                        updateHUD();
+                    } else { await showMessage(`But it missed!`); }
+                    player.guarding = false;
+                    if (player.hp <= 0) { animateFaint('player'); await showMessage(`${player.name} fainted!`); await showMessage(`You lost the battle...`); endBattle(); return; }
+                }
+            }
+            runBattle();
+        })();
+    </script>
 </body>
 </html>
