@@ -108,6 +108,22 @@ body::before {
   100% { opacity: 0;    transform: translateY(-60px) translateX(var(--drift, 20px)); }
 }
 
+.topbar {
+  position: sticky; top: 12px; z-index: 20;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 18px; padding: 11px 14px; margin-bottom: 32px;
+  background: rgba(15,16,32,.88); backdrop-filter: blur(10px);
+  border: 2px solid var(--border); box-shadow: 3px 3px 0 var(--dark);
+}
+.brand { font-family: 'Press Start 2P', monospace; font-size: 8px; color: var(--accent); }
+.topnav { display: flex; gap: 8px; flex-wrap: wrap; }
+.topnav a {
+  font-family: 'Press Start 2P', monospace; font-size: 7px;
+  text-decoration: none; color: var(--text2);
+  padding: 8px 10px; border: 2px solid transparent;
+}
+.topnav a:hover, .topnav a:focus-visible { border-color: var(--border); color: var(--text); }
+
 .container {
   max-width: 980px;
   margin: auto;
@@ -421,6 +437,33 @@ footer {
 
 .card.hidden { display: none; }
 
+.about-panel {
+  background: var(--panel); border: 3px solid var(--border);
+  box-shadow: 4px 4px 0 var(--dark); padding: 26px;
+  display: grid; grid-template-columns: 1.25fr .75fr; gap: 26px;
+}
+.about-panel h3 { font-family: 'Press Start 2P', monospace; font-size: 11px; line-height: 1.7; margin-bottom: 14px; color: var(--text); }
+.about-panel p { font-size: 12px; line-height: 1.9; color: var(--text2); max-width: 640px; }
+.about-panel p + p { margin-top: 11px; }
+.about-side { border-left: 2px dashed var(--border); padding-left: 22px; }
+.about-side div { margin-bottom: 14px; }
+.about-side small { display: block; font-family: 'Press Start 2P', monospace; font-size: 6px; color: var(--accent2-text); margin-bottom: 7px; }
+.about-side strong { font-family: 'Press Start 2P', monospace; font-size: 9px; color: var(--text); line-height: 1.7; }
+
+.contact-panel {
+  position: relative; overflow: hidden;
+  border: 3px solid var(--accent); background: var(--panel);
+  padding: 30px; box-shadow: 5px 5px 0 var(--dark); margin-top: 56px;
+}
+.contact-panel h2 { font-family: 'Press Start 2P', monospace; font-size: 13px; line-height: 1.7; margin-bottom: 12px; color: var(--text); }
+.contact-panel p { font-size: 11px; color: var(--text2); line-height: 1.8; max-width: 720px; margin-bottom: 20px; }
+.contact-row { display: flex; gap: 10px; flex-wrap: wrap; }
+
+@media (max-width: 640px) {
+  .about-panel { grid-template-columns: 1fr; }
+  .about-side { border-left: 0; border-top: 2px dashed var(--border); padding: 18px 0 0; }
+}
+
 @media (max-width: 640px) {
   .hero { grid-template-columns: 1fr; }
   .hero-left { border-right: none; border-bottom: 3px solid var(--border); }
@@ -436,6 +479,17 @@ footer {
 
 <!-- Floating pixel particles -->
 <div class="particles" id="particles"></div>
+
+<nav class="topbar" aria-label="Primary navigation">
+  <div class="brand">ABDULAHAD.EXE</div>
+  <div class="topnav">
+    <a href="#about">ABOUT</a>
+    <a href="#featured">WORK</a>
+    <a href="#projects">PROJECTS</a>
+    <a href="#skills">SKILLS</a>
+    <a href="#contact">CONTACT</a>
+  </div>
+</nav>
 
 <div class="container">
 
@@ -493,8 +547,27 @@ footer {
     </div>
   </div>
 
+  <!-- ABOUT -->
+  <div class="section-header" id="about">
+    <span class="section-title">ABOUT</span>
+    <div class="section-line"></div>
+    <span class="section-badge">THE PLAYER</span>
+  </div>
+  <div class="about-panel">
+    <div>
+      <h3>CURIOUS BY DEFAULT.</h3>
+      <p>I enjoy crossing boundaries between software layers. One project might be a transformer model; the next might be a processor pipeline or a small game engine.</p>
+      <p>This portfolio is intentionally built the same way: as a working piece of software, not just a collection of screenshots.</p>
+    </div>
+    <div class="about-side">
+      <div><small>PRIMARY INTERESTS</small><strong>AI · BACKEND · SYSTEMS</strong></div>
+      <div><small>ENGINEERING MINDSET</small><strong>EXPERIMENT → BUILD → REFACTOR</strong></div>
+      <div><small>COLLABORATION</small><strong>OPEN TO CHALLENGING PROBLEMS</strong></div>
+    </div>
+  </div>
+
   <!-- FEATURED -->
-  <div class="section-header">
+  <div class="section-header" id="featured">
     <span class="section-title">FEATURED</span>
     <div class="section-line"></div>
     <span class="section-badge">TOP PICKS</span>
@@ -545,7 +618,7 @@ footer {
   </div>
 
   <!-- ALL PROJECTS -->
-  <div class="section-header">
+  <div class="section-header" id="projects">
     <span class="section-title">ALL PROJECTS</span>
     <div class="section-line"></div>
   </div>
@@ -662,7 +735,7 @@ footer {
   </div>
 
   <!-- SKILLS -->
-  <div class="section-header">
+  <div class="section-header" id="skills">
     <span class="section-title">SKILLS</span>
     <div class="section-line"></div>
   </div>
@@ -680,6 +753,16 @@ footer {
     <div class="skill-chip">REACT</div>
     <div class="skill-chip">GIT</div>
     <div class="skill-chip">DOCKER</div>
+  </div>
+
+  <!-- CONTACT -->
+  <div class="contact-panel" id="contact">
+    <h2>READY PLAYER TWO?</h2>
+    <p>I'm interested in software engineering and AI work where I can build, learn quickly, and contribute to difficult technical problems.</p>
+    <div class="contact-row">
+      <a class="btn btn-primary" href="mailto:YOUR_EMAIL@example.com">EMAIL ME</a>
+      <a class="btn btn-outline" href="https://github.com/MrAAAswat" target="_blank"><i class="fab fa-github"></i> GITHUB</a>
+    </div>
   </div>
 
   <footer>
